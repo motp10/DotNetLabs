@@ -73,7 +73,7 @@ public class Test
     [Fact]
     public void Script5()
     {
-        var train = new Train(100,  100000);
+        var train = new Train(100, 100000);
         ITrackSection road1 = new PowerRoad(100, 20000);
         ITrackSection road2 = new SimpleRoad(100);
         ITrackSection station1 = new Station(300, 10);

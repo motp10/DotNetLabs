@@ -38,7 +38,7 @@ public class Train : ITrain
 
     private void UpdateSpeed(Time time)
     {
-        Velocity = new Speed(Velocity,  Boost, time);
+        Velocity = new Speed(Velocity, Boost, time);
     }
 
     private Distance PastDistance(Time time)
