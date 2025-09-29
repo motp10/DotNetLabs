@@ -1,0 +1,30 @@
+namespace Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
+
+public record class Distance
+{
+    public Distance()
+    {
+        Value = 0;
+    }
+
+    public Distance(decimal value)
+    {
+        if (value < 0)
+        {
+            throw new Exception("distance is under 0");
+        }
+
+        Value = value;
+    }
+
+    public Distance(Speed speed, Time time)
+    {
+        Value = speed.Value * time.Value;
+    }
+
+    public static bool operator <(Distance a, Distance b) => a.Value < b.Value;
+
+    public static bool operator >(Distance a, Distance b) => a.Value > b.Value;
+
+    public decimal Value { get; }
+}
