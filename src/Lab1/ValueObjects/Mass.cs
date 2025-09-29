@@ -9,7 +9,7 @@ public record class Mass
             throw new Exception("mass is under 0");
         }
 
-        this.Value = value;
+        Value = value;
     }
 
     public decimal Value { get; }

@@ -30,13 +30,13 @@ public abstract record ResultType
     {
         var totalTime = new Time(0);
 
-        if ((left is ResultTypes.ResultType.Success left_res) &&
-            (right is ResultTypes.ResultType.Success right_res))
+        if ((left is Success left_res) &&
+            (right is Success right_res))
         {
             totalTime = new Time(left_res.PastTime.Value + right_res.PastTime.Value);
             return new Success(totalTime);
         }
 
-        return new ResultTypes.ResultType.Failed();
+        return new Failed();
     }
 }
