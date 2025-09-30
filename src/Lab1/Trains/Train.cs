@@ -29,8 +29,8 @@ public class Train
                 return new ResultTypes.ResultType.Failed();
             }
 
-            pastDistance = new Distance(PastDistance(interval).Value + pastDistance.Value);
-            pastTime = new Time(pastTime.Value + interval.Value);
+            pastDistance = Distance.Create(PastDistance(interval), pastDistance);
+            pastTime = Time.Create(pastTime, interval);
         }
 
         return new ResultTypes.ResultType.Success(pastTime);
@@ -52,5 +52,5 @@ public class Train
 
     public Acceleration Boost { get; private set; }
 
-    public Mass Weight { get; private set; }
+    public Mass Weight { get; }
 }

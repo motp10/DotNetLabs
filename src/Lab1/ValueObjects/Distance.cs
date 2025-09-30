@@ -22,6 +22,11 @@ public record class Distance
         Value = speed.Value * time.Value;
     }
 
+    public static Distance Create(Distance lhs, Distance rhs)
+    {
+        return new Distance(lhs.Value + rhs.Value);
+    }
+
     public static bool operator <(Distance a, Distance b) => a.Value < b.Value;
 
     public static bool operator >(Distance a, Distance b) => a.Value > b.Value;

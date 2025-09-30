@@ -18,7 +18,7 @@ public class RouteSimulator
             ResultType iterationResult = section.TrainInteraction(train, period);
             if (iterationResult is ResultType.Success success)
             {
-                totalTime = new Time(totalTime.Value + success.PastTime.Value);
+                totalTime = Time.Create(totalTime, success.PastTime);
             }
             else
             {
