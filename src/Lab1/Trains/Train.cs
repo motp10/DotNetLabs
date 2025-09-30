@@ -24,7 +24,7 @@ public class Train
         while (pastDistance < distance)
         {
             UpdateSpeed(interval);
-            if (Velocity.Value == 0)
+            if (Velocity == Speed.MinimalSpeed)
             {
                 return new ResultTypes.ResultType.Failed();
             }

@@ -24,7 +24,7 @@ public class Station : IStationSegment
             return new ResultTypes.ResultType.Failed();
         }
 
-        if (train.Velocity.Value == 0)
+        if (train.Velocity == Speed.MinimalSpeed)
         {
             return new ResultTypes.ResultType.Failed();
         }

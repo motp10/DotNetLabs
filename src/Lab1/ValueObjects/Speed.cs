@@ -17,6 +17,8 @@ public record class Speed
         Value = speed.Value + (acceleration.Value * duration.Value);
     }
 
+    public static Speed MinimalSpeed => new Speed(0);
+
     public static bool operator <(Speed a, Speed b) => a.Value < b.Value;
 
     public static bool operator >(Speed a, Speed b) => a.Value > b.Value;
