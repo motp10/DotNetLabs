@@ -15,7 +15,7 @@ public class PowerRoad : IRoadSegment
 
     private Force Power { get; }
 
-    public ResultTypes.ResultType TrainInteraction(ITrain train, Time time)
+    public ResultTypes.ResultType TrainInteraction(Train train, Time time)
     {
         train.ForceApplication(Power);
 

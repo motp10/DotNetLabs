@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
-public record Route : IRoute
+public record Route
 {
     public Route(IReadOnlyCollection<ITrackSection> sections, Speed maxSpeed)
     {

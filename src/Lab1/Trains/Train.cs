@@ -2,14 +2,14 @@ using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Trains;
 
-public class Train : ITrain
+public class Train
 {
-    public Train(decimal mass, decimal force)
+    public Train(Mass mass, Force force)
     {
-        Weight = new Mass(mass);
+        Weight = mass;
         Velocity = new Speed(0);
         Boost = new Acceleration(0);
-        MaxForce = new Force(force);
+        MaxForce = force;
     }
 
     public void ForceApplication(Force force)

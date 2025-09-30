@@ -12,7 +12,7 @@ public class SimpleRoad : IRoadSegment
         Length = new Distance(length);
     }
 
-    public ResultTypes.ResultType TrainInteraction(ITrain train, Time time)
+    public ResultTypes.ResultType TrainInteraction(Train train, Time time)
     {
         train.ForceApplication(new Force(0));
 

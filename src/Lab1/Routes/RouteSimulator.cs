@@ -5,9 +5,9 @@ using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
-public class RouteSimulator : IRouteSimulator
+public class RouteSimulator
 {
-    public ResultType Simulate(Route route, ITrain train, decimal time = 1)
+    public ResultType Simulate(Route route, Train train, decimal time = 1)
     {
         var period = new Time(time);
         ResultType result = new ResultType.Success(new Time(0));

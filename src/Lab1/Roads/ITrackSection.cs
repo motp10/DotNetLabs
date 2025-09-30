@@ -4,5 +4,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public interface ITrackSection
 {
-    ResultTypes.ResultType TrainInteraction(ITrain train, ValueObjects.Time time);
+    ResultTypes.ResultType TrainInteraction(Train train, ValueObjects.Time time);
 }

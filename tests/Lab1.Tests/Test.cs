@@ -12,7 +12,7 @@ public class Test
     [Fact]
     public void Script1()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(100, 10000);
         ITrackSection road2 = new SimpleRoad(100);
         var segments = new List<ITrackSection> { road1, road2 };
@@ -28,7 +28,7 @@ public class Test
     [Fact]
     public void Script2()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(100, 20000);
         ITrackSection road2 = new SimpleRoad(100);
         var segments = new List<ITrackSection> { road1, road2 };
@@ -42,7 +42,7 @@ public class Test
     [Fact]
     public void Script3()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(100, 10);
         ITrackSection road2 = new SimpleRoad(100);
         ITrackSection road3 = new SimpleRoad(200);
@@ -58,7 +58,7 @@ public class Test
     [Fact]
     public void Script4()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(100, 20000);
         ITrackSection road2 = new SimpleRoad(100);
         ITrackSection station1 = new Station(200, 10);
@@ -73,7 +73,7 @@ public class Test
     [Fact]
     public void Script5()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(100, 20000);
         ITrackSection road2 = new SimpleRoad(100);
         ITrackSection station1 = new Station(300, 10);
@@ -88,7 +88,7 @@ public class Test
     [Fact]
     public void Script6()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road0 = new PowerRoad(100, 20000);
         ITrackSection road1 = new PowerRoad(100, 10000);
         ITrackSection road2 = new SimpleRoad(100);
@@ -104,7 +104,7 @@ public class Test
     [Fact]
     public void Script7()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new SimpleRoad(100);
         var segments = new List<ITrackSection> { road1 };
 
@@ -117,7 +117,7 @@ public class Test
     [Fact]
     public void Script8()
     {
-        var train = new Train(100, 100000);
+        var train = new Train(new Mass(100), new Force(100000));
         ITrackSection road1 = new PowerRoad(200, 10000);
         ITrackSection road2 = new PowerRoad(200, -20000);
 

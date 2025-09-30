@@ -15,7 +15,7 @@ public class Station : IStationSegment
 
     public Time BoardingAndDisembarking { get; }
 
-    public ResultTypes.ResultType TrainInteraction(ITrain train, Time time)
+    public ResultTypes.ResultType TrainInteraction(Train train, Time time)
     {
         train.ForceApplication(new Force(0));
 
