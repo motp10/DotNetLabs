@@ -16,7 +16,7 @@ public class PowerRoad : ITrackSection
         _force = force;
     }
 
-    public ResultTypes.IterationResult TrainInteraction(Train train, Time time)
+    public IterationResult TrainInteraction(Train train, Time time)
     {
         train.ForceApplication(_force);
 
@@ -24,7 +24,7 @@ public class PowerRoad : ITrackSection
         {
             train.ForceApplication(new Force(0));
 
-            return new ResultTypes.IterationResult.Failed();
+            return new IterationResult.Failed();
         }
 
         IterationResult result = train.DistancePassing(Length, time);
