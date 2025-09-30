@@ -5,10 +5,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public class Station : IStationSegment
 {
-    public Station(decimal arriveLimit, decimal time)
+    public Station(Speed arriveLimit, Time time)
     {
-        ArriveLimit = new Speed(arriveLimit);
-        BoardingAndDisembarking = new Time(time);
+        ArriveLimit = arriveLimit;
+        BoardingAndDisembarking = time;
     }
 
     public Speed ArriveLimit { get; }

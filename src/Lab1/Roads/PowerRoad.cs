@@ -5,10 +5,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public class PowerRoad : IRoadSegment
 {
-    public PowerRoad(decimal length, decimal force)
+    public PowerRoad(Distance length, Force force)
     {
-        Length = new Distance(length);
-        Force = new Force(force);
+        Length = length;
+        Force = force;
     }
 
     public Distance Length { get; }

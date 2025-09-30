@@ -14,9 +14,9 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(100, 10000);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(10000));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
         var segments = new List<ITrackSection> { road1, road2 };
 
@@ -35,9 +35,9 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(100, 20000);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
         var segments = new List<ITrackSection> { road1, road2 };
 
@@ -53,13 +53,13 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(100, 10);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(10));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
-        ITrackSection road3 = new SimpleRoad(200);
+        ITrackSection road3 = new SimpleRoad(new Distance(200));
 
-        ITrackSection station1 = new Station(200, 10);
+        ITrackSection station1 = new Station(new Speed(200), new Time(10));
 
         var segments = new List<ITrackSection> { road1, road2, station1, road3 };
 
@@ -75,11 +75,11 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(100, 20000);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
-        ITrackSection station1 = new Station(200, 10);
+        ITrackSection station1 = new Station(new Speed(200), new Time(10));
 
         var segments = new List<ITrackSection> { road1, station1, road2 };
 
@@ -95,11 +95,11 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(100, 20000);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
-        ITrackSection station1 = new Station(300, 10);
+        ITrackSection station1 = new Station(new Speed(300), new Time(10));
 
         var segments = new List<ITrackSection> { road1, road2, station1, road2 };
 
@@ -115,15 +115,15 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road0 = new PowerRoad(100, 20000);
+        ITrackSection road0 = new PowerRoad(new Distance(100), new Force(20000));
 
-        ITrackSection road1 = new PowerRoad(100, 10000);
+        ITrackSection road1 = new PowerRoad(new Distance(100), new Force(10000));
 
-        ITrackSection road2 = new SimpleRoad(100);
+        ITrackSection road2 = new SimpleRoad(new Distance(100));
 
-        ITrackSection road3 = new PowerRoad(100, -10000);
+        ITrackSection road3 = new PowerRoad(new Distance(100), new Force(-10000));
 
-        ITrackSection station1 = new Station(100, 10);
+        ITrackSection station1 = new Station(new Speed(100), new Time(10));
 
         var segments = new List<ITrackSection> { road0, road2, road3, station1, road2, road1, road2, road3 };
 
@@ -139,7 +139,7 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new SimpleRoad(100);
+        ITrackSection road1 = new SimpleRoad(new Distance(100));
 
         var segments = new List<ITrackSection> { road1 };
 
@@ -155,9 +155,9 @@ public class Test
     {
         var train = new Train(new Mass(100), new Force(100000));
 
-        ITrackSection road1 = new PowerRoad(200, 10000);
+        ITrackSection road1 = new PowerRoad(new Distance(200), new Force(10000));
 
-        ITrackSection road2 = new PowerRoad(200, -20000);
+        ITrackSection road2 = new PowerRoad(new Distance(200), new Force(-20000));
 
         var segments = new List<ITrackSection> { road1, road2 };
 

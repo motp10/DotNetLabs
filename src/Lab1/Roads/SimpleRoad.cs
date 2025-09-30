@@ -9,9 +9,9 @@ public class SimpleRoad : IRoadSegment
 
     private static Force Force => new Force(0);
 
-    public SimpleRoad(decimal length)
+    public SimpleRoad(Distance length)
     {
-        Length = new Distance(length);
+        Length = length;
     }
 
     public ResultTypes.ResultType TrainInteraction(Train train, Time time)
