@@ -2,11 +2,11 @@ using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 
-public abstract record ResultType
+public abstract record SimulatorResult
 {
-    private ResultType() { }
+    private SimulatorResult() { }
 
-    public sealed record Success : ResultType
+    public sealed record Success : SimulatorResult
     {
         public Success(Time time)
         {
@@ -16,7 +16,7 @@ public abstract record ResultType
         public Time PastTime { get; }
     }
 
-    public sealed record Failed : ResultType
+    public sealed record Failed : SimulatorResult
     {
     }
 }

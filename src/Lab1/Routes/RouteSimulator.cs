@@ -7,26 +7,30 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
 public class RouteSimulator
 {
-    public ResultType Simulate(Route route, Train train, decimal time = 1)
+    public SimulatorResult Simulate(Route route, Train train, Time period)
     {
-        var period = new Time(time);
-        ResultType result = new ResultType.Success(new Time(0));
+        SimulatorResult result = new SimulatorResult.Success(new Time(0));
+
+        var totalTime = new Time(0);
 
         foreach (ITrackSection section in route.Sections)
         {
             ResultType iterationResult = section.TrainInteraction(train, period);
-            result += iterationResult;
-            if (result is ResultType.Failed)
+            if (iterationResult is ResultType.Success success)
             {
-                return result;
+                totalTime = new Time(totalTime.Value + success.PastTime.Value);
+            }
+            else
+            {
+                return new SimulatorResult.Failed();
             }
         }
 
         if (train.Velocity > route.MaxSpeed)
         {
-            return new ResultType.Failed();
+            return new SimulatorResult.Failed();
         }
 
-        return result;
+        return new SimulatorResult.Success(totalTime);
     }
 }

@@ -17,12 +17,12 @@ public class Test
         ITrackSection road2 = new SimpleRoad(100);
         var segments = new List<ITrackSection> { road1, road2 };
 
-        var expected = new ResultType.Success(new Time(2));
+        var expected = new SimulatorResult.Success(new Time(2));
         var route = new Route(segments, new Speed(1000));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
         Assert.Equal(expected, actual);
-        Assert.IsType<ResultType.Success>(actual);
+        Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
@@ -34,9 +34,9 @@ public class Test
         var segments = new List<ITrackSection> { road1, road2 };
 
         var route = new Route(segments, new Speed(199));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Failed>(actual);
+        Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
@@ -50,9 +50,9 @@ public class Test
         var segments = new List<ITrackSection> { road1, road2, station1, road3 };
 
         var route = new Route(segments, new Speed(1000));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Success>(actual);
+        Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
@@ -65,9 +65,9 @@ public class Test
         var segments = new List<ITrackSection> { road1, station1, road2 };
 
         var route = new Route(segments, new Speed(100));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Failed>(actual);
+        Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
@@ -80,9 +80,9 @@ public class Test
         var segments = new List<ITrackSection> { road1, road2, station1, road2 };
 
         var route = new Route(segments, new Speed(100));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Failed>(actual);
+        Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
@@ -97,8 +97,8 @@ public class Test
         var segments = new List<ITrackSection> { road0, road2, road3, station1, road2, road1, road2, road3 };
 
         var route = new Route(segments, new Speed(150));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
-        Assert.IsType<ResultType.Success>(actual);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
@@ -109,9 +109,9 @@ public class Test
         var segments = new List<ITrackSection> { road1 };
 
         var route = new Route(segments, new Speed(150));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Failed>(actual);
+        Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
@@ -124,8 +124,8 @@ public class Test
         var segments = new List<ITrackSection> { road1, road2 };
 
         var route = new Route(segments, new Speed(150));
-        ResultType actual = new RouteSimulator().Simulate(route, train, 1);
+        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
 
-        Assert.IsType<ResultType.Failed>(actual);
+        Assert.IsType<SimulatorResult.Failed>(actual);
     }
 }
