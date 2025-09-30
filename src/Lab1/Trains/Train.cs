@@ -50,7 +50,7 @@ public class Train
 
     public Speed Velocity { get; private set; }
 
-    public Acceleration Boost { get; private set; }
+    private Acceleration Boost { get; set; }
 
-    public Mass Weight { get; }
+    private Mass Weight { get; }
 }
