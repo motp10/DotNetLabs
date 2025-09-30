@@ -1,29 +1,36 @@
+using Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab1.Trains;
 using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
-public class PowerRoad : IRoadSegment
+public class PowerRoad : ITrackSection
 {
+    public Distance Length { get; }
+
+    private readonly Force _force;
+
     public PowerRoad(Distance length, Force force)
     {
         Length = length;
-        Force = force;
+        _force = force;
     }
 
-    public Distance Length { get; }
-
-    private Force Force { get; }
-
-    public ResultTypes.ResultType TrainInteraction(Train train, Time time)
+    public ResultTypes.IterationResult TrainInteraction(Train train, Time time)
     {
-        train.ForceApplication(Force);
+        train.ForceApplication(_force);
 
-        if (Force > train.MaxForce)
+        if (_force > train.MaxForce)
         {
-            return new ResultTypes.ResultType.Failed();
+            train.ForceApplication(new Force(0));
+
+            return new ResultTypes.IterationResult.Failed();
         }
 
-        return train.DistancePassing(Length, time);
+        IterationResult result = train.DistancePassing(Length, time);
+
+        train.ForceApplication(new Force(0));
+
+        return result;
     }
 }

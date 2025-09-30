@@ -3,21 +3,17 @@ using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
-public class SimpleRoad : IRoadSegment
+public class SimpleRoad : ITrackSection
 {
     public Distance Length { get; }
-
-    private static Force Force => new Force(0);
 
     public SimpleRoad(Distance length)
     {
         Length = length;
     }
 
-    public ResultTypes.ResultType TrainInteraction(Train train, Time time)
+    public ResultTypes.IterationResult TrainInteraction(Train train, Time time)
     {
-        train.ForceApplication(Force);
-
         return train.DistancePassing(Length, time);
     }
 }

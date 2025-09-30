@@ -7,11 +7,12 @@ using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Tests;
 
-public class Test
+public class RouteTests
 {
     [Fact]
-    public void Script1()
+    public void PowerSimpleSuccess()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(100), new Force(10000));
@@ -24,15 +25,18 @@ public class Test
 
         var route = new Route(segments, new Speed(1000));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.Equal(expected, actual);
         Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
-    public void Script2()
+    public void PowerForceMoreThanMaxTrainForceFailed()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
@@ -43,14 +47,17 @@ public class Test
 
         var route = new Route(segments, new Speed(199));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
-    public void Script3()
+    public void PowerSimpleStationSuccess()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(100), new Force(10));
@@ -65,14 +72,17 @@ public class Test
 
         var route = new Route(segments, new Speed(1000));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
-    public void Script4()
+    public void SpeedMoreTHanStationMaxSpeedFailed()
     {
+        // Assert
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
@@ -85,14 +95,17 @@ public class Test
 
         var route = new Route(segments, new Speed(100));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
-    public void Script5()
+    public void SpeedLessMaxStationSpeedButMoreRoouteMaxSpeed()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(100), new Force(20000));
@@ -105,14 +118,17 @@ public class Test
 
         var route = new Route(segments, new Speed(100));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Asset
         Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
-    public void Script6()
+    public void SpeedMoreStationMaxSpeedThanLessSuccess()
     {
+        // Assert
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road0 = new PowerRoad(new Distance(100), new Force(20000));
@@ -129,14 +145,17 @@ public class Test
 
         var route = new Route(segments, new Speed(150));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Success>(actual);
     }
 
     [Fact]
-    public void Script7()
+    public void SimpleRoadFailed()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new SimpleRoad(new Distance(100));
@@ -145,14 +164,17 @@ public class Test
 
         var route = new Route(segments, new Speed(150));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Failed>(actual);
     }
 
     [Fact]
-    public void Script8()
+    public void ForceStopsTrain()
     {
+        // Arrange
         var train = new Train(new Mass(100), new Force(100000));
 
         ITrackSection road1 = new PowerRoad(new Distance(200), new Force(10000));
@@ -163,8 +185,10 @@ public class Test
 
         var route = new Route(segments, new Speed(150));
 
-        SimulatorResult actual = new RouteSimulator().Simulate(route, train, new Time(1));
+        // Act
+        SimulatorResult actual = route.Simulate(train, new Time(1));
 
+        // Assert
         Assert.IsType<SimulatorResult.Failed>(actual);
     }
 }

@@ -4,20 +4,28 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Trains;
 
 public class Train
 {
+    public Force MaxForce { get; private set; }
+
+    public Speed Velocity { get; private set; }
+
+    private readonly Mass _weight;
+
+    private Acceleration _boost;
+
     public Train(Mass mass, Force force)
     {
-        Weight = mass;
+        _weight = mass;
         Velocity = new Speed(0);
-        Boost = new Acceleration(0);
+        _boost = new Acceleration(0);
         MaxForce = force;
     }
 
     public void ForceApplication(Force force)
     {
-        Boost = new Acceleration(force, Weight);
+        _boost = new Acceleration(force, _weight);
     }
 
-    public ResultTypes.ResultType DistancePassing(Distance distance, Time interval)
+    public ResultTypes.IterationResult DistancePassing(Distance distance, Time interval)
     {
         var pastDistance = new Distance(0);
         var pastTime = new Time(0);
@@ -26,31 +34,23 @@ public class Train
             UpdateSpeed(interval);
             if (Velocity == Speed.MinimalSpeed)
             {
-                return new ResultTypes.ResultType.Failed();
+                return new ResultTypes.IterationResult.Failed();
             }
 
             pastDistance = Distance.Create(PastDistance(interval), pastDistance);
             pastTime = Time.Create(pastTime, interval);
         }
 
-        return new ResultTypes.ResultType.Success(pastTime);
+        return new ResultTypes.IterationResult.Success(pastTime);
     }
 
     private void UpdateSpeed(Time time)
     {
-        Velocity = new Speed(Velocity, Boost, time);
+        Velocity = new Speed(Velocity, _boost, time);
     }
 
     private Distance PastDistance(Time time)
     {
         return new Distance(Velocity, time);
     }
-
-    public Force MaxForce { get; private set; }
-
-    public Speed Velocity { get; private set; }
-
-    private Acceleration Boost { get; set; }
-
-    private Mass Weight { get; }
 }

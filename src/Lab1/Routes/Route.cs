@@ -1,18 +1,47 @@
+using Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab1.Roads;
+using Itmo.ObjectOrientedProgramming.Lab1.Trains;
 using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
 
 public record Route
 {
+    private readonly Speed _maxSpeed;
+
+    private readonly IReadOnlyCollection<ITrackSection> _sections;
+
     public Route(IReadOnlyCollection<ITrackSection> sections, Speed maxSpeed)
     {
-        MaxSpeed = maxSpeed;
+        _maxSpeed = maxSpeed;
 
-        Sections = sections;
+        _sections = sections;
     }
 
-    public Speed MaxSpeed { get; }
+    public SimulatorResult Simulate(Train train, Time period)
+    {
+        SimulatorResult result = new SimulatorResult.Success(new Time(0));
 
-    public IReadOnlyCollection<ITrackSection> Sections { get; }
+        var totalTime = new Time(0);
+
+        foreach (ITrackSection section in _sections)
+        {
+            IterationResult iterationIterationResult = section.TrainInteraction(train, period);
+            if (iterationIterationResult is IterationResult.Success success)
+            {
+                totalTime = Time.Create(totalTime, success.PastTime);
+            }
+            else
+            {
+                return new SimulatorResult.Failed();
+            }
+        }
+
+        if (train.Velocity > _maxSpeed)
+        {
+            return new SimulatorResult.Failed();
+        }
+
+        return new SimulatorResult.Success(totalTime);
+    }
 }
