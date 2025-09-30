@@ -8,18 +8,18 @@ public class PowerRoad : IRoadSegment
     public PowerRoad(decimal length, decimal force)
     {
         Length = new Distance(length);
-        Power = new Force(force);
+        Force = new Force(force);
     }
 
     public Distance Length { get; }
 
-    private Force Power { get; }
+    private Force Force { get; }
 
     public ResultTypes.ResultType TrainInteraction(Train train, Time time)
     {
-        train.ForceApplication(Power);
+        train.ForceApplication(Force);
 
-        if (Power > train.MaxForce)
+        if (Force > train.MaxForce)
         {
             return new ResultTypes.ResultType.Failed();
         }

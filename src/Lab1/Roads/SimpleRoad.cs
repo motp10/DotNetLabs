@@ -7,6 +7,8 @@ public class SimpleRoad : IRoadSegment
 {
     public Distance Length { get; }
 
+    private static Force Force => new Force(0);
+
     public SimpleRoad(decimal length)
     {
         Length = new Distance(length);
@@ -14,7 +16,7 @@ public class SimpleRoad : IRoadSegment
 
     public ResultTypes.ResultType TrainInteraction(Train train, Time time)
     {
-        train.ForceApplication(new Force(0));
+        train.ForceApplication(Force);
 
         return train.DistancePassing(Length, time);
     }
