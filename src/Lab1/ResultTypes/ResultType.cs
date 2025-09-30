@@ -6,17 +6,7 @@ public abstract record ResultType
 {
     private ResultType() { }
 
-    public sealed record Success : ResultType
-    {
-        public Success(Time time)
-        {
-            PastTime = time;
-        }
+    public sealed record Success(Time PastTime) : ResultType;
 
-        public Time PastTime { get; }
-    }
-
-    public sealed record Failed : ResultType
-    {
-    }
+    public sealed record Failed : ResultType;
 }

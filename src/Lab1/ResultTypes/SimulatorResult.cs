@@ -6,17 +6,7 @@ public abstract record SimulatorResult
 {
     private SimulatorResult() { }
 
-    public sealed record Success : SimulatorResult
-    {
-        public Success(Time time)
-        {
-            PastTime = time;
-        }
+    public sealed record Success(Time PastTime) : SimulatorResult;
 
-        public Time PastTime { get; }
-    }
-
-    public sealed record Failed : SimulatorResult
-    {
-    }
+    public sealed record Failed : SimulatorResult;
 }
