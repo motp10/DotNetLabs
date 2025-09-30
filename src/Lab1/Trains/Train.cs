@@ -26,7 +26,7 @@ public class Train
             UpdateSpeed(interval);
             if (Velocity.Value == 0)
             {
-                return new ResultTypes.ResultType.Failed("Train is too slaw");
+                return new ResultTypes.ResultType.Failed();
             }
 
             pastDistance = new Distance(PastDistance(interval).Value + pastDistance.Value);

@@ -18,12 +18,6 @@ public abstract record ResultType
 
     public sealed record Failed : ResultType
     {
-        public string Comment { get; }
-
-        public Failed(string comment = "")
-        {
-            Comment = comment;
-        }
     }
 
     public static ResultType operator +(ResultType left, ResultType right)

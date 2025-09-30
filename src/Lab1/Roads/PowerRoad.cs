@@ -21,7 +21,7 @@ public class PowerRoad : IRoadSegment
 
         if (Power > train.MaxForce)
         {
-            return new ResultTypes.ResultType.Failed("Power is more than trains max force");
+            return new ResultTypes.ResultType.Failed();
         }
 
         return train.DistancePassing(Length, time);

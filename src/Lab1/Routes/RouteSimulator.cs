@@ -24,7 +24,7 @@ public class RouteSimulator
 
         if (train.Velocity > route.MaxSpeed)
         {
-            return new ResultType.Failed("Train finished route too with very fast speed");
+            return new ResultType.Failed();
         }
 
         return result;

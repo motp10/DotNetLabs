@@ -21,12 +21,12 @@ public class Station : IStationSegment
 
         if (train.Velocity > ArriveLimit)
         {
-            return new ResultTypes.ResultType.Failed("Trains speed is more than station max");
+            return new ResultTypes.ResultType.Failed();
         }
 
         if (train.Velocity.Value == 0)
         {
-            return new ResultTypes.ResultType.Failed("Train is too slow");
+            return new ResultTypes.ResultType.Failed();
         }
 
         return new ResultTypes.ResultType.Success(BoardingAndDisembarking);
