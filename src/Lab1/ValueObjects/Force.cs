@@ -7,6 +7,8 @@ public record class Force
         Value = value;
     }
 
+    public static Force Zero => new Force(0);
+
     public static bool operator <(Force a, Force b) => a.Value < b.Value;
 
     public static bool operator >(Force a, Force b) => a.Value > b.Value;

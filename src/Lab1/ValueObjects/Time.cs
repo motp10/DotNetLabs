@@ -12,5 +12,7 @@ public record class Time
         Value = value;
     }
 
+    public static Time Zero => new Time(0);
+
     public decimal Value { get; }
 }

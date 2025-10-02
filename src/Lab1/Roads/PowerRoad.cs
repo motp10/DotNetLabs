@@ -6,31 +6,30 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public class PowerRoad : ITrackSection
 {
-    public Distance Length { get; }
-
     private readonly Force _force;
+
+    private readonly Distance _length;
 
     public PowerRoad(Distance length, Force force)
     {
-        Length = length;
+        _length = length;
         _force = force;
     }
 
-    public IterationResult TrainInteraction(Train train, Time time)
+    public IterationResult TrainInteraction(Train train, Time interval)
     {
-        train.ForceApplication(_force);
-
-        if (_force > train.MaxForce)
+        if (train.TryForceApplication(_force))
         {
-            train.ForceApplication(new Force(0));
+            IterationResult result = train.DistancePassing(_length, interval);
 
-            return new IterationResult.Failed();
+            if (!train.TryForceApplication(Force.Zero))
+            {
+                throw new Exception("Train couldn't stop");
+            }
+
+            return result;
         }
 
-        IterationResult result = train.DistancePassing(Length, time);
-
-        train.ForceApplication(new Force(0));
-
-        return result;
+        return new IterationResult.Failed();
     }
 }

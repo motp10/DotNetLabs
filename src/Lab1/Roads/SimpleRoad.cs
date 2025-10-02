@@ -5,15 +5,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public class SimpleRoad : ITrackSection
 {
-    public Distance Length { get; }
+    private readonly Distance _lenght;
 
     public SimpleRoad(Distance length)
     {
-        Length = length;
+        _lenght = length;
     }
 
-    public ResultTypes.IterationResult TrainInteraction(Train train, Time time)
+    public ResultTypes.IterationResult TrainInteraction(Train train, Time interval)
     {
-        return train.DistancePassing(Length, time);
+        return train.DistancePassing(_lenght, interval);
     }
 }

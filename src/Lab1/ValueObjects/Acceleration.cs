@@ -12,5 +12,7 @@ public record class Acceleration
         Value = force.Value / mass.Value;
     }
 
+    public static Acceleration Zero => new Acceleration(0);
+
     public decimal Value { get; }
 }

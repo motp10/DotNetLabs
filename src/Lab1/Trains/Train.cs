@@ -4,9 +4,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Trains;
 
 public class Train
 {
-    public Force MaxForce { get; private set; }
-
     public Speed Velocity { get; private set; }
+
+    private readonly Force _maxForce;
 
     private readonly Mass _weight;
 
@@ -15,24 +15,34 @@ public class Train
     public Train(Mass mass, Force force)
     {
         _weight = mass;
-        Velocity = new Speed(0);
-        _boost = new Acceleration(0);
-        MaxForce = force;
+        Velocity = Speed.Zero;
+        _boost = Acceleration.Zero;
+        _maxForce = force;
     }
 
-    public void ForceApplication(Force force)
+    public bool TryForceApplication(Force force)
     {
+        if (force > _maxForce)
+        {
+            return false;
+        }
+
         _boost = new Acceleration(force, _weight);
+
+        return true;
     }
 
     public ResultTypes.IterationResult DistancePassing(Distance distance, Time interval)
     {
-        var pastDistance = new Distance(0);
-        var pastTime = new Time(0);
+        Distance pastDistance = Distance.Zero;
+
+        Time pastTime = Time.Zero;
+
         while (pastDistance < distance)
         {
             UpdateSpeed(interval);
-            if (Velocity == Speed.MinimalSpeed)
+
+            if (Velocity == Speed.Zero)
             {
                 return new ResultTypes.IterationResult.Failed();
             }

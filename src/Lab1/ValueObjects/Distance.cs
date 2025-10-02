@@ -2,11 +2,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 public record class Distance
 {
-    public Distance()
-    {
-        Value = 0;
-    }
-
     public Distance(decimal value)
     {
         if (value < 0)
@@ -30,6 +25,8 @@ public record class Distance
     public static bool operator <(Distance a, Distance b) => a.Value < b.Value;
 
     public static bool operator >(Distance a, Distance b) => a.Value > b.Value;
+
+    public static Distance Zero => new Distance(0);
 
     public decimal Value { get; }
 }

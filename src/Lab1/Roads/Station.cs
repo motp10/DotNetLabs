@@ -5,30 +5,23 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Roads;
 
 public class Station : ITrackSection
 {
-    public Speed ArriveLimit { get; }
+    private readonly Speed _arriveLimit;
 
-    public Time BoardingAndDisembarking { get; }
+    private readonly Time _boardingAndDisembarking;
 
     public Station(Speed arriveLimit, Time time)
     {
-        ArriveLimit = arriveLimit;
-        BoardingAndDisembarking = time;
+        _arriveLimit = arriveLimit;
+        _boardingAndDisembarking = time;
     }
 
-    public ResultTypes.IterationResult TrainInteraction(Train train, Time time)
+    public ResultTypes.IterationResult TrainInteraction(Train train, Time interval)
     {
-        train.ForceApplication(new Force(0));
-
-        if (train.Velocity > ArriveLimit)
+        if ((train.Velocity > _arriveLimit) || Speed.IsZero(train.Velocity))
         {
             return new ResultTypes.IterationResult.Failed();
         }
 
-        if (train.Velocity == Speed.MinimalSpeed)
-        {
-            return new ResultTypes.IterationResult.Failed();
-        }
-
-        return new ResultTypes.IterationResult.Success(BoardingAndDisembarking);
+        return new ResultTypes.IterationResult.Success(_boardingAndDisembarking);
     }
 }
