@@ -22,7 +22,7 @@ public record Route
     {
         SimulatorResult result = new SimulatorResult.Success(new Time(0));
 
-        var totalTime = new Time(0);
+        Time totalTime = Time.Zero;
 
         foreach (ITrackSection section in _sections)
         {
