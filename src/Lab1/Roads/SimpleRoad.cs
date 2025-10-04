@@ -13,9 +13,10 @@ public class SimpleRoad : ITrackSection
         _lenght = length;
     }
 
-    public ResultTypes.IterationResult TrainInteraction(Train train, Time interval)
+    public IterationResult TrainInteraction(Train train, Time interval)
     {
         TrainDistancePassingResult result = train.DistancePassing(_lenght, interval);
+
         if (result is TrainDistancePassingResult.Success res)
         {
             return new IterationResult.Success(res.PastTime);
