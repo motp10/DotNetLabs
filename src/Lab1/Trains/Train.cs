@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Trains;
@@ -32,7 +33,7 @@ public class Train
         return true;
     }
 
-    public ResultTypes.IterationResult DistancePassing(Distance distance, Time interval)
+    public TrainDistancePassingResult DistancePassing(Distance distance, Time interval)
     {
         Distance pastDistance = Distance.Zero;
 
@@ -44,14 +45,14 @@ public class Train
 
             if (Velocity == Speed.Zero)
             {
-                return new ResultTypes.IterationResult.Failed();
+                return new TrainDistancePassingResult.Failed();
             }
 
             pastDistance = Distance.Create(PastDistance(interval), pastDistance);
             pastTime = Time.Create(pastTime, interval);
         }
 
-        return new ResultTypes.IterationResult.Success(pastTime);
+        return new TrainDistancePassingResult.Success(pastTime);
     }
 
     private void UpdateSpeed(Time time)

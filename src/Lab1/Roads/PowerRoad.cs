@@ -20,14 +20,17 @@ public class PowerRoad : ITrackSection
     {
         if (train.TryForceApplication(_force))
         {
-            IterationResult result = train.DistancePassing(_length, interval);
+            TrainDistancePassingResult result = train.DistancePassing(_length, interval);
 
             if (!train.TryForceApplication(Force.Zero))
             {
                 throw new Exception("Train couldn't stop");
             }
 
-            return result;
+            if (result is TrainDistancePassingResult.Success res)
+            {
+                return new IterationResult.Success(res.PastTime);
+            }
         }
 
         return new IterationResult.Failed();

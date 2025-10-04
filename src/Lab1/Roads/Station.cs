@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab1.Trains;
 using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
@@ -15,13 +16,13 @@ public class Station : ITrackSection
         _boardingAndDisembarking = time;
     }
 
-    public ResultTypes.IterationResult TrainInteraction(Train train, Time interval)
+    public IterationResult TrainInteraction(Train train, Time interval)
     {
         if ((train.Velocity > _arriveLimit) || Speed.IsZero(train.Velocity))
         {
-            return new ResultTypes.IterationResult.Failed();
+            return new IterationResult.Failed();
         }
 
-        return new ResultTypes.IterationResult.Success(_boardingAndDisembarking);
+        return new IterationResult.Success(_boardingAndDisembarking);
     }
 }

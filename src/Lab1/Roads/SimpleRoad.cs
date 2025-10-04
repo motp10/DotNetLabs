@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab1.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab1.Trains;
 using Itmo.ObjectOrientedProgramming.Lab1.ValueObjects;
 
@@ -14,6 +15,12 @@ public class SimpleRoad : ITrackSection
 
     public ResultTypes.IterationResult TrainInteraction(Train train, Time interval)
     {
-        return train.DistancePassing(_lenght, interval);
+        TrainDistancePassingResult result = train.DistancePassing(_lenght, interval);
+        if (result is TrainDistancePassingResult.Success res)
+        {
+            return new IterationResult.Success(res.PastTime);
+        }
+
+        return new IterationResult.Failed();
     }
 }
