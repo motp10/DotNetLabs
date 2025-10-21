@@ -52,6 +52,7 @@ public class MessageSystemTests
         user.MarkMessage(mockMessage);
         MarkResult res = user.MarkMessage(mockMessage);
 
+        // Assert
         Assert.IsType<MarkResult.Failed>(res);
     }
 

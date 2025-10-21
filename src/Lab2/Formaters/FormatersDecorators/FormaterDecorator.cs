@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Formaters.Writers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Formaters.FormatersDecorators;
 
-public class FormaterDecorator
+public class FormaterDecorator : IWriter
 {
     private readonly IWriter _writer;
 
