@@ -13,11 +13,16 @@ public class User : IUser
 
     public void ReceiveMessage(Message msg)
     {
-        _messagesDict.Add(msg, false);
+        _messagesDict.TryAdd(msg, false);
     }
 
     public bool IsMessageMarked(Message msg)
     {
+        if (!_messagesDict.ContainsKey(msg))
+        {
+            throw new Exception("No such message");
+        }
+
         return _messagesDict[msg];
     }
 
