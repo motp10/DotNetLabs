@@ -1,17 +1,15 @@
-using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-
 namespace Itmo.ObjectOrientedProgramming.Lab2.Destinations.Loggers;
 
 public class SimpleLogger : ILogger
 {
-    private readonly List<Message> _messages;
+    private readonly List<string> _messages;
 
     public SimpleLogger()
     {
-        _messages = new List<Message>();
+        _messages = new List<string>();
     }
 
-    public void Log(Message message)
+    public void Log(string message)
     {
         _messages.Add(message);
     }

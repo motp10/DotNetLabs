@@ -6,9 +6,9 @@ public class TextNotificationSystem : INotificationSystem
 {
     private readonly TextNotice _textNotice;
 
-    public TextNotificationSystem(string text)
+    public TextNotificationSystem()
     {
-        _textNotice = new TextNotice(text);
+        _textNotice = new TextNotice("Achtung Achtung");
     }
 
     public void Notice()

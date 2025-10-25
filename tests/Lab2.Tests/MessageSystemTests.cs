@@ -61,7 +61,7 @@ public class MessageSystemTests
     {
         // Arrange
         IDestination mockDestination = Substitute.For<IDestination>();
-        var filterDest = new FilterDecorator(mockDestination, MessageImportanceLevel.High);
+        var filterDest = new FilterDestination(mockDestination, MessageImportanceLevel.High);
         var lowMessage = new Message("ddj", "asdlkasjd", MessageImportanceLevel.Medium);
 
         // Act
@@ -77,14 +77,14 @@ public class MessageSystemTests
         // Arrange
         ILogger moqLogger = Substitute.For<ILogger>();
         IDestination moqDestination = Substitute.For<IDestination>();
-        var logDestination = new LoggerDecorator(moqDestination, moqLogger);
+        var logDestination = new LoggerDestination(moqDestination, moqLogger);
         var someMessage = new Message("ddj", "asdlkasjd", MessageImportanceLevel.Medium);
 
         // Act
         logDestination.Recieve(someMessage);
 
         // Assert
-        moqLogger.Received().Log(Arg.Any<Message>());
+        moqLogger.Received().Log(Arg.Any<string>());
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class MessageSystemTests
         // Arrange
         IUser moqUser = Substitute.For<IUser>();
         var dest = new UserDestination(moqUser);
-        var filteredDestination = new FilterDecorator(dest, MessageImportanceLevel.High);
+        var filteredDestination = new FilterDestination(dest, MessageImportanceLevel.High);
         var someMessage = new Message("ddj", "asdlkasjd", MessageImportanceLevel.Medium);
 
         // Act

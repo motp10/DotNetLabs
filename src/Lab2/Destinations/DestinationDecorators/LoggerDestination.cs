@@ -3,13 +3,13 @@ using Itmo.ObjectOrientedProgramming.Lab2.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Destinations.DestinationDecorators;
 
-public class LoggerDecorator : IDestination
+public class LoggerDestination : IDestination
 {
     private readonly IDestination _destination;
 
     private readonly ILogger _logger;
 
-    public LoggerDecorator(IDestination destination, ILogger logger)
+    public LoggerDestination(IDestination destination, ILogger logger)
     {
         _destination = destination;
         _logger = logger;
@@ -17,7 +17,8 @@ public class LoggerDecorator : IDestination
 
     public void Recieve(Message message)
     {
-        _logger.Log(message);
+        _logger.Log(message.Head);
+        _logger.Log(message.Body);
         _destination.Recieve(message);
     }
 }
