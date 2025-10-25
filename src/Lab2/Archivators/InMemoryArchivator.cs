@@ -11,8 +11,8 @@ public class InMemoryArchivator : IArchivator
         _messages = new List<Message>();
     }
 
-    public void WriteMessage(Message msg)
+    public void WriteMessage(Message message)
     {
-        _messages.Add(msg);
+        _messages.Add(message);
     }
 }

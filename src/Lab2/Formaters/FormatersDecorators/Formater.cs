@@ -11,9 +11,15 @@ public class Formater : IWriter
         _writer = writer;
     }
 
-    public void Write(string str)
+    public void WriteHead(string text)
     {
-        string new_str = $"# {str}\n";
-        _writer.Write($"# {new_str}\n");
+        string new_str = $"# {text}\n";
+        _writer.WriteHead($"# {new_str}\n");
+    }
+
+    public void WriteBody(string text)
+    {
+        string new_str = $" {text}\n";
+        _writer.WriteBody($" {new_str}\n");
     }
 }

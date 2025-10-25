@@ -13,9 +13,9 @@ public class FormatArchivator : IArchivator
         _formater = new Formater(writer);
     }
 
-    public void WriteMessage(Message msg)
+    public void WriteMessage(Message message)
     {
-        _formater.Write(msg.Head);
-        _formater.Write(msg.Body);
+        _formater.WriteHead(message.Head);
+        _formater.WriteBody(message.Body);
     }
 }

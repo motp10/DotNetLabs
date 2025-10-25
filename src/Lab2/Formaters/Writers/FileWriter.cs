@@ -9,8 +9,13 @@ public class FileWriter : IWriter
         _fileName = new FileName(filePath);
     }
 
-    public void Write(string str)
+    public void WriteHead(string text)
     {
-        File.AppendAllText(_fileName.Value, str);
+        File.AppendAllText(_fileName.ToString(), $"{text}\n");
+    }
+
+    public void WriteBody(string text)
+    {
+        File.AppendAllText(_fileName.ToString(), $"{text}\n");
     }
 }

@@ -11,34 +11,34 @@ public class User : IUser
         _messagesDict = new Dictionary<Message, bool>();
     }
 
-    public void ReceiveMessage(Message msg)
+    public void ReceiveMessage(Message message)
     {
-        _messagesDict.TryAdd(msg, false);
+        _messagesDict.TryAdd(message, false);
     }
 
-    public bool IsMessageMarked(Message msg)
+    public bool IsMessageMarked(Message message)
     {
-        if (!_messagesDict.ContainsKey(msg))
+        if (!_messagesDict.ContainsKey(message))
         {
             throw new Exception("No such message");
         }
 
-        return _messagesDict[msg];
+        return _messagesDict[message];
     }
 
-    public MarkResult MarkMessage(Message msg)
+    public MarkResult MarkMessage(Message message)
     {
-        if (!_messagesDict.ContainsKey(msg))
+        if (!_messagesDict.ContainsKey(message))
         {
             throw new Exception("No such message");
         }
 
-        if (_messagesDict[msg])
+        if (_messagesDict[message])
         {
             return new MarkResult.Failed();
         }
 
-        _messagesDict[msg] = true;
+        _messagesDict[message] = true;
         return new MarkResult.Failed();
     }
 }

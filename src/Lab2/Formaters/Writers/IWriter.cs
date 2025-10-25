@@ -2,5 +2,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Formaters.Writers;
 
 public interface IWriter
 {
-    void Write(string str);
+    void WriteHead(string text);
+
+    void WriteBody(string text);
 }

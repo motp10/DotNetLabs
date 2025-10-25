@@ -4,5 +4,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Archivators;
 
 public interface IArchivator
 {
-    void WriteMessage(Message msg);
+    void WriteMessage(Message message);
 }
