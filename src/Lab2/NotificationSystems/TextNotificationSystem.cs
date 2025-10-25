@@ -4,6 +4,6 @@ public class TextNotificationSystem : INotificationSystem
 {
     public void Notice()
     {
-        Console.WriteLine("aaaaa");
+        Console.WriteLine("Bad words in message");
     }
 }

@@ -6,11 +6,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Archivators;
 
 public class FormatArchivator : IArchivator
 {
-    private readonly FormaterDecorator _formater;
+    private readonly Formater _formater;
 
     public FormatArchivator(IWriter writer)
     {
-        _formater = new FormaterDecorator(writer);
+        _formater = new Formater(writer);
     }
 
     public void WriteMessage(Message msg)
