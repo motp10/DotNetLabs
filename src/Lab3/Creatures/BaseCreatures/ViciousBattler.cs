@@ -15,7 +15,7 @@ public class ViciousBattler : BaseCreature
     }
 
     public ViciousBattler(Damage? attack = null, Health? health = null)
-    : base(attack ?? DefaultAttack(),  health ?? DefaultHelth())
+    : base(attack ?? DefaultAttack(), health ?? DefaultHelth())
     {
     }
 

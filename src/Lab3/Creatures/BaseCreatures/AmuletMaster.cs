@@ -15,7 +15,7 @@ public class AmuletMaster : BaseCreature
     }
 
     public AmuletMaster(Damage? attack = null, Health? health = null)
-    : base(attack ?? DefaultAttack(),  health ?? DefaultHelth())
+    : base(attack ?? DefaultAttack(), health ?? DefaultHelth())
     {
     }
 
