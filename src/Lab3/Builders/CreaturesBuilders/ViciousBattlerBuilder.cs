@@ -1,20 +1,23 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.SimpleInterfaces;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
 
-public class AmuletMasterBuilder : ICreatureBuilder
+public class ViciousBattlerBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
 {
-    private readonly List<IFactory> _modificators = new List<IFactory>
-    {
-        new AttackSkillFactory(),
-        new MagicShieldFactory(),
-    };
+    private readonly List<IFactory> _modificators = new List<IFactory>();
 
-    private Health _health = AmuletMaster.DefaultHelth();
-    private Damage _attack = AmuletMaster.DefaultAttack();
+    private Health _health;
+    private Damage _attack;
+
+    public ViciousBattlerBuilder(Damage damage, Health health)
+    {
+        _health = health;
+        _attack = damage;
+    }
 
     public ICreatureBuilder AddModificator(IFactory modificator)
     {
@@ -32,7 +35,7 @@ public class AmuletMasterBuilder : ICreatureBuilder
         return this;
     }
 
-    public ICreatureBuilder WithHealth(Health health)
+    public IDamageBuilder WithHealth(Health health)
     {
         _health = health;
         return this;
@@ -46,10 +49,10 @@ public class AmuletMasterBuilder : ICreatureBuilder
 
     public ICreature Build()
     {
-        ICreature currCreature = new AmuletMaster(_attack, _health);
+        var currCreature = new ViciousBattler(_attack, _health);
         foreach (IFactory modificator in _modificators)
         {
-            currCreature = modificator.ImposeModification(currCreature);
+            modificator.ImposeModification(currCreature);
         }
 
         return currCreature;

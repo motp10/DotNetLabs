@@ -1,3 +1,6 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
+using Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
+
 namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class CreaturesMaker
@@ -19,7 +22,7 @@ public class CreaturesMaker
 
     public ICreatureBuilder MakeMimic()
     {
-        return new MimicBuilder();
+        return new Mimic.MimicBuilder().WithHealth(Mimic.DefaultHelth()).WithAttack(Mimic.DefaultAttack());
     }
 
     public ICreatureBuilder MakeViciousBattler()

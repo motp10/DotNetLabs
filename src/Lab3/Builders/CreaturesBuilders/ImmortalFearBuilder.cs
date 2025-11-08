@@ -1,15 +1,23 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.SimpleInterfaces;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
 
-public class ViciousBattlerBuilder : ICreatureBuilder
+public class ImmortalFearBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
 {
     private readonly List<IFactory> _modificators = new List<IFactory>();
-    private Health _health = ViciousBattler.DefaultHelth();
-    private Damage _attack = ViciousBattler.DefaultAttack();
+
+    private Health _health;
+    private Damage _attack;
+
+    public ImmortalFearBuilder(Damage damage, Health health)
+    {
+        _health = health;
+        _attack = damage;
+    }
 
     public ICreatureBuilder AddModificator(IFactory modificator)
     {
@@ -27,7 +35,7 @@ public class ViciousBattlerBuilder : ICreatureBuilder
         return this;
     }
 
-    public ICreatureBuilder WithHealth(Health health)
+    public IDamageBuilder WithHealth(Health health)
     {
         _health = health;
         return this;
@@ -41,7 +49,7 @@ public class ViciousBattlerBuilder : ICreatureBuilder
 
     public ICreature Build()
     {
-        var currCreature = new ViciousBattler(_attack, _health);
+        var currCreature = new ImmortalFear(_attack, _health);
         foreach (IFactory modificator in _modificators)
         {
             modificator.ImposeModification(currCreature);

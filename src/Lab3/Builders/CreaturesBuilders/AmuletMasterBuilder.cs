@@ -1,15 +1,23 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.SimpleInterfaces;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
 
-public class BattleAnalystBuilder : ICreatureBuilder
+public class AmuletMasterBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
 {
     private readonly List<IFactory> _modificators = new List<IFactory>();
-    private Health _health = BattleAnalyst.DefaultHelth();
-    private Damage _attack = BattleAnalyst.DefaultAttack();
+
+    private Health _health;
+    private Damage _attack;
+
+    public AmuletMasterBuilder(Damage damage, Health health)
+    {
+        _health = health;
+        _attack = damage;
+    }
 
     public ICreatureBuilder AddModificator(IFactory modificator)
     {
@@ -27,7 +35,7 @@ public class BattleAnalystBuilder : ICreatureBuilder
         return this;
     }
 
-    public ICreatureBuilder WithHealth(Health health)
+    public IDamageBuilder WithHealth(Health health)
     {
         _health = health;
         return this;
@@ -41,10 +49,10 @@ public class BattleAnalystBuilder : ICreatureBuilder
 
     public ICreature Build()
     {
-        var currCreature = new BattleAnalyst(_attack, _health);
+        ICreature currCreature = new AmuletMaster(_attack, _health);
         foreach (IFactory modificator in _modificators)
         {
-            modificator.ImposeModification(currCreature);
+            currCreature = modificator.ImposeModification(currCreature);
         }
 
         return currCreature;

@@ -17,8 +17,8 @@ public class Battle
 
     public BattleResult Fight()
     {
-        PlayerTable defensePlayer = _firstPlayer.Clone();
-        PlayerTable attackPlayer = _secondPlayer.Clone();
+        PlayerTable defensePlayer = _firstPlayer;
+        PlayerTable attackPlayer = _secondPlayer;
         bool isFirstAttack = false;
 
         while (true)
