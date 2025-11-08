@@ -5,6 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
+using Itmo.ObjectOrientedProgramming.Lab3.Potions;
 using Itmo.ObjectOrientedProgramming.Lab3.Tables;
 using NSubstitute;
 using Xunit;
@@ -74,7 +75,7 @@ public class BattleSimulatorTests
     public class ViciousBattlerTests
     {
         [Fact]
-        public void TakingNonFatalDamageDoublesAttack()
+        public void TakingDamageDoublesAttack()
         {
             // Arrange
             ICreature fighter = new ViciousBattlerBuilder().Build();
@@ -87,7 +88,7 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void TakingFatalDamageDoesNotDoubleAttack()
+        public void TakingFatalDamageNoDoubleAttack()
         {
             // Arrange
             ICreature fighter = new ViciousBattlerBuilder().Build();
@@ -104,7 +105,7 @@ public class BattleSimulatorTests
     public class MimicTests
     {
         [Fact]
-        public void AttackCopiesMaxStatsFromOpponent()
+        public void CopiesMaxStatsFromOpponent()
         {
             // Arrange
             ICreature mimic = new MimicBuilder().Build();
@@ -121,7 +122,7 @@ public class BattleSimulatorTests
     public class ImmortalFearTests
     {
         [Fact]
-        public void FirstDeathResurrectsWith1Health()
+        public void FirstDeathResurrectsWithOneHealth()
         {
             // Arrange
             ICreature creature = new ImmortalFearBuilder().Build();
@@ -148,24 +149,10 @@ public class BattleSimulatorTests
         }
     }
 
-    public class AmuletMasterTests
-    {
-        [Fact]
-        public void AmuletMasterHasMagicShieldAndAttackSkill()
-        {
-            // Arrange
-            ICreature creature = new AmuletMasterBuilder().Build();
-
-            // Assert
-            Assert.NotNull(creature);
-            Assert.True(creature.Attack.Value > 0);
-        }
-    }
-
     public class FightTests
     {
         [Fact]
-        public void Player1WinsWhenOpponentHasNoCreatures()
+        public void FirstHasCreatureSecondHAsNothingFIrstWins()
         {
             // Arrange
             var player1 = new PlayerTable();
@@ -220,7 +207,7 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void MimicVsBattleAnalystMimicCopiesStatsAndWins()
+        public void MimicVsBattleAnalystMimicWins()
         {
             // Arrange
             var player1 = new PlayerTable();
@@ -239,7 +226,7 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void ViciousBattlerVsWeakOpponentDoublesAttackAndWins()
+        public void ViciousBattlerVsAmuletMasterViciousBattlerWins()
         {
             // Arrange
             var player1 = new PlayerTable();
@@ -258,7 +245,7 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void ImmortalFearWithSecondLifeWinsAfterResurrection()
+        public void ImmortalFearVsImmortalFearImmortalFearWins()
         {
             // Arrange
             var player1 = new PlayerTable();
@@ -277,7 +264,7 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void AmuletMasterWithModifiersDefeatsStrongerOpponent()
+        public void AmuletMasterVsViciousBattlerAmuletMasterWins()
         {
             // Arrange
             var player1 = new PlayerTable();
@@ -328,6 +315,25 @@ public class BattleSimulatorTests
 
             // Assert
             Assert.IsType<BattleResult.SecondWinner>(result);
+        }
+    }
+
+    public class SpellsTests
+    {
+        [Fact]
+        public void MirrorSpellTest()
+        {
+            // Arrange
+            var creator = new CreaturesMaker();
+            ICreature creature = creator.MakeBattleAnalyst().WithAttack(new Damage(1)).WithHealth(new Health(5)).Build();
+
+            // Act
+            var spell = new MirrorSpell();
+            spell.Apply(creature);
+
+            // Assert
+            Assert.Equal(creature.Attack, new Damage(5));
+            Assert.Equal(creature.Health, new Health(1));
         }
     }
 
