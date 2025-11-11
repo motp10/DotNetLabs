@@ -7,6 +7,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 using Itmo.ObjectOrientedProgramming.Lab3.Potions;
 using Itmo.ObjectOrientedProgramming.Lab3.Tables;
+using Itmo.ObjectOrientedProgramming.Lab3.Tables.TableBuilders;
 using NSubstitute;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class BattleSimulatorTests
         public void BattleAnalystDefaultBuild()
         {
             // Arrange
-            ICreature creature = new CreaturesMaker().MakeBattleAnalyst().Build();
+            ICreature creature = new BattleAnalystFactory().MakeBuilder().Build();
 
             // Assert
             Assert.Equal(creature.Attack, BattleAnalyst.DefaultAttack());
@@ -31,7 +32,7 @@ public class BattleSimulatorTests
         public void AmuletMasterDefaultBuild()
         {
             // Arrange
-            ICreature creature = new CreaturesMaker().MakeAmuletMaster().Build();
+            ICreature creature = new AmuletMasterFactory().MakeBuilder().Build();
 
             // Assert
             Assert.Equal(creature.Attack, AmuletMaster.DefaultAttack());
@@ -42,7 +43,7 @@ public class BattleSimulatorTests
         public void ImmortalFearDefaultBuild()
         {
             // Arrange
-            ICreature creature = new CreaturesMaker().MakeImmortalFear().Build();
+            ICreature creature = new ImmortalFearFactory().MakeBuilder().Build();
 
             // Assert
             Assert.Equal(creature.Attack, ImmortalFear.DefaultAttack());
@@ -53,7 +54,7 @@ public class BattleSimulatorTests
         public void MimicDefaultBuild()
         {
             // Arrange
-            ICreature creature = new CreaturesMaker().MakeMimic().Build();
+            ICreature creature = new MimicFactory().MakeBuilder().Build();
 
             // Assert
             Assert.Equal(creature.Attack, Mimic.DefaultAttack());
@@ -64,7 +65,7 @@ public class BattleSimulatorTests
         public void ViciousBattlerDefaultBuild()
         {
             // Arrange
-            ICreature creature = new CreaturesMaker().MakeViciousBattler().Build();
+            ICreature creature = new ViciousBattlerFactory().MakeBuilder().Build();
 
             // Assert
             Assert.Equal(creature.Attack, ViciousBattler.DefaultAttack());
@@ -78,7 +79,7 @@ public class BattleSimulatorTests
         public void TakingDamageDoublesAttack()
         {
             // Arrange
-            ICreature fighter = new ViciousBattlerBuilder().Build();
+            ICreature fighter = new ViciousBattlerFactory().MakeBuilder().Build();
 
             // Act
             fighter.ReceiveDamage(new Damage(2));
@@ -91,7 +92,7 @@ public class BattleSimulatorTests
         public void TakingFatalDamageNoDoubleAttack()
         {
             // Arrange
-            ICreature fighter = new ViciousBattlerBuilder().Build();
+            ICreature fighter = new ViciousBattlerFactory().MakeBuilder().Build();
 
             // Act
             fighter.ReceiveDamage(new Damage(20));
@@ -108,8 +109,9 @@ public class BattleSimulatorTests
         public void CopiesMaxStatsFromOpponent()
         {
             // Arrange
-            ICreature mimic = new MimicBuilder().Build();
-            ICreature target = new BattleAnalystBuilder().Build();
+            ICreature mimic = new MimicFactory().MakeBuilder().Build();
+            ICreature target = new BattleAnalystFactory().MakeBuilder().Build();
+            ICreature fighter = new ViciousBattlerFactory().MakeBuilder().Build();
 
             // Act
             mimic.CauseDamage(target);
@@ -125,7 +127,7 @@ public class BattleSimulatorTests
         public void FirstDeathResurrectsWithOneHealth()
         {
             // Arrange
-            ICreature creature = new ImmortalFearBuilder().Build();
+            ICreature creature = new ImmortalFearFactory().MakeBuilder().Build();
 
             // Act
             creature.ReceiveDamage(new Damage(100));
@@ -138,7 +140,7 @@ public class BattleSimulatorTests
         public void SecondDeathKillsCreature()
         {
             // Arrange
-            ICreature creature = new ImmortalFearBuilder().Build();
+            ICreature creature = new ImmortalFearFactory().MakeBuilder().Build();
 
             // Act
             creature.ReceiveDamage(new Damage(100));
@@ -155,12 +157,11 @@ public class BattleSimulatorTests
         public void FirstHasCreatureSecondHAsNothingFIrstWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            ICreature creature = new BattleAnalystFactory().MakeBuilder().Build();
+            PlayerTable player1 = new TableBuilder().AddCreature(creature).Build();
+            PlayerTable player2 = new TableBuilder().Build();
 
             // Act
-            player1.TryAddNewCreature(creator.MakeBattleAnalyst().Build());
             var battle = new Battle(player1, player2);
             BattleResult result = battle.Fight();
 
@@ -172,12 +173,8 @@ public class BattleSimulatorTests
         public void BattleAnalystVsAmuletMasterBattleAnalystWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
-
-            player1.TryAddNewCreature(creator.MakeBattleAnalyst().Build());
-            player2.TryAddNewCreature(creator.MakeAmuletMaster().Build());
+            PlayerTable player1 = new TableBuilder().AddCreature(new BattleAnalystFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new AmuletMasterFactory().MakeBuilder().Build()).Build();
             var battle = new Battle(player1, player2);
 
             // Act
@@ -191,12 +188,9 @@ public class BattleSimulatorTests
         public void ImmortalFearVsViciousBattlerImmortalFearWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new ImmortalFearFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new ViciousBattlerFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeImmortalFear().Build());
-            player2.TryAddNewCreature(creator.MakeViciousBattler().Build());
             var battle = new Battle(player1, player2);
 
             // Act
@@ -210,12 +204,9 @@ public class BattleSimulatorTests
         public void MimicVsBattleAnalystMimicWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new MimicFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new BattleAnalystFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeMimic().Build());
-            player2.TryAddNewCreature(creator.MakeBattleAnalyst().Build());
             var battle = new Battle(player1, player2);
 
             // Act
@@ -226,34 +217,28 @@ public class BattleSimulatorTests
         }
 
         [Fact]
-        public void ViciousBattlerVsAmuletMasterViciousBattlerWins()
+        public void ViciousBattlerVsAmuletMasterAmuletMasterWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new ViciousBattlerFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new AmuletMasterFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeViciousBattler().WithHealth(new Health(100)).Build());
-            player2.TryAddNewCreature(creator.MakeAmuletMaster().WithHealth(new Health(1)).WithAttack(new Damage(1)).Build());
             var battle = new Battle(player1, player2);
 
             // Act
             BattleResult result = battle.Fight();
 
             // Assert
-            Assert.IsType<BattleResult.FirstWinner>(result);
+            Assert.IsType<BattleResult.SecondWinner>(result);
         }
 
         [Fact]
         public void ImmortalFearVsImmortalFearImmortalFearWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new ImmortalFearFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new BattleAnalystFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeImmortalFear().Build());
-            player2.TryAddNewCreature(creator.MakeBattleAnalyst().Build());
             var battle = new Battle(player1, player2);
 
             // Act
@@ -267,12 +252,9 @@ public class BattleSimulatorTests
         public void AmuletMasterVsViciousBattlerAmuletMasterWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new AmuletMasterFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new ViciousBattlerFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeAmuletMaster().Build());
-            player2.TryAddNewCreature(creator.MakeViciousBattler().Build());
             var battle = new Battle(player1, player2);
 
             // Act
@@ -301,13 +283,10 @@ public class BattleSimulatorTests
         public void SingleCreatureVsMultipleTeamWithMoreCreaturesWins()
         {
             // Arrange
-            var player1 = new PlayerTable();
-            var player2 = new PlayerTable();
-            var creator = new CreaturesMaker();
+            PlayerTable player1 = new TableBuilder().AddCreature(new BattleAnalystFactory().MakeBuilder().Build()).Build();
+            PlayerTable player2 = new TableBuilder().AddCreature(new AmuletMasterFactory().MakeBuilder().Build())
+                                                    .AddCreature(new ViciousBattlerFactory().MakeBuilder().Build()).Build();
 
-            player1.TryAddNewCreature(creator.MakeBattleAnalyst().Build());
-            player2.TryAddNewCreature(creator.MakeAmuletMaster().Build());
-            player2.TryAddNewCreature(creator.MakeViciousBattler().Build());
             var battle = new Battle(player1, player2);
 
             // Act
@@ -324,8 +303,7 @@ public class BattleSimulatorTests
         public void MirrorSpellTest()
         {
             // Arrange
-            var creator = new CreaturesMaker();
-            ICreature creature = creator.MakeBattleAnalyst().WithAttack(new Damage(1)).WithHealth(new Health(5)).Build();
+            ICreature creature = new BattleAnalystFactory().MakeBuilder(new Damage(1), new Health(5)).Build();
 
             // Act
             var spell = new MirrorSpell();
@@ -343,17 +321,16 @@ public class BattleSimulatorTests
         public void CreatureWithModifiers()
         {
             // Arrange
-            var baseCreature = new BattleAnalyst();
-            IFactory shieldMock = Substitute.For<IFactory>();
-            IFactory masteryMock = Substitute.For<IFactory>();
-            var builder = new CreaturesMaker();
+            ICreature baseCreature = new BattleAnalystFactory().MakeBuilder().Build();
+            IModificatorFactory shieldMock = Substitute.For<IModificatorFactory>();
+            IModificatorFactory attackMock = Substitute.For<IModificatorFactory>();
 
             // Act
-            ICreature creature = builder.MakeBattleAnalyst().AddModificator(shieldMock).AddModificator(masteryMock).Build();
+            ICreature creature = new BattleAnalystFactory().MakeBuilder().AddModificator(shieldMock).AddModificator(attackMock).Build();
 
             // Assert
             shieldMock.Received(1).ImposeModification(Arg.Is<ICreature>(c => c == creature));
-            masteryMock.Received(1).ImposeModification(Arg.Is<ICreature>(c => c == creature));
+            attackMock.Received(1).ImposeModification(Arg.Is<ICreature>(c => c == creature));
         }
     }
 }

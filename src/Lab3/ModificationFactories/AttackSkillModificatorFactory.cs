@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ModificatorsDecorators;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
-public class AttackSkillFactory : IFactory
+public class AttackSkillModificatorFactory : IModificatorFactory
 {
     public ICreature ImposeModification(ICreature creature)
     {

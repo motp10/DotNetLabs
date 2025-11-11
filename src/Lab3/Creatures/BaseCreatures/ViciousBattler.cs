@@ -34,28 +34,24 @@ public class ViciousBattler : BaseCreature
         return new ViciousBattler(Attack, Health);
     }
 
-    public class ViciousBattlerBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
+    public class Builder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
     {
-        private readonly List<IFactory> _modificators = new List<IFactory>();
+        private readonly List<IModificatorFactory> _modificators = new List<IModificatorFactory>();
 
         private Health _health;
         private Damage _attack;
 
-        public ViciousBattlerBuilder(Damage damage, Health health)
-        {
-            _health = health;
-            _attack = damage;
-        }
+        public Builder() { }
 
-        public ICreatureBuilder AddModificator(IFactory modificator)
+        public ICreatureBuilder AddModificator(IModificatorFactory modificator)
         {
             _modificators.Add(modificator);
             return this;
         }
 
-        public ICreatureBuilder AddModificators(IReadOnlyCollection<IFactory> modificators)
+        public ICreatureBuilder AddModificators(IReadOnlyCollection<IModificatorFactory> modificators)
         {
-            foreach (IFactory factory in modificators)
+            foreach (IModificatorFactory factory in modificators)
             {
                 _modificators.Add(factory);
             }
@@ -78,7 +74,7 @@ public class ViciousBattler : BaseCreature
         public ICreature Build()
         {
             var currCreature = new ViciousBattler(_attack, _health);
-            foreach (IFactory modificator in _modificators)
+            foreach (IModificatorFactory modificator in _modificators)
             {
                 modificator.ImposeModification(currCreature);
             }

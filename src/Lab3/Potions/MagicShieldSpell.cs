@@ -7,7 +7,7 @@ public class MagicShieldSpell : ISpell
 {
     public ICreature Apply(ICreature creature)
     {
-        var shieldFactory = new MagicShieldFactory();
+        var shieldFactory = new MagicShieldModificatorFactory();
         return shieldFactory.ImposeModification(creature);
     }
 }

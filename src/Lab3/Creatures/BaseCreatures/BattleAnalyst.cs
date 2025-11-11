@@ -42,28 +42,24 @@ public class BattleAnalyst : BaseCreature
         return new BattleAnalyst(Attack, Health, _isBoosted);
     }
 
-    public class BattleAnalystBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
+    public class Builder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
     {
-        private readonly List<IFactory> _modificators = new List<IFactory>();
+        private readonly List<IModificatorFactory> _modificators = new List<IModificatorFactory>();
 
         private Health _health;
         private Damage _attack;
 
-        public BattleAnalystBuilder(Damage damage, Health health)
-        {
-            _health = health;
-            _attack = damage;
-        }
+        public Builder() { }
 
-        public ICreatureBuilder AddModificator(IFactory modificator)
+        public ICreatureBuilder AddModificator(IModificatorFactory modificator)
         {
             _modificators.Add(modificator);
             return this;
         }
 
-        public ICreatureBuilder AddModificators(IReadOnlyCollection<IFactory> modificators)
+        public ICreatureBuilder AddModificators(IReadOnlyCollection<IModificatorFactory> modificators)
         {
-            foreach (IFactory factory in modificators)
+            foreach (IModificatorFactory factory in modificators)
             {
                 _modificators.Add(factory);
             }
@@ -86,7 +82,7 @@ public class BattleAnalyst : BaseCreature
         public ICreature Build()
         {
             var currCreature = new BattleAnalyst(_attack, _health);
-            foreach (IFactory modificator in _modificators)
+            foreach (IModificatorFactory modificator in _modificators)
             {
                 modificator.ImposeModification(currCreature);
             }

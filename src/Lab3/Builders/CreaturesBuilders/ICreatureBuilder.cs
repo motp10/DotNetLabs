@@ -5,7 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
 
 public interface ICreatureBuilder
 {
-    ICreatureBuilder AddModificator(IFactory modificator);
+    ICreatureBuilder AddModificator(IModificatorFactory modificator);
 
     ICreature Build();
 }

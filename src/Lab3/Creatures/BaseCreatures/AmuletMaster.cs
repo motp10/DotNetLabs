@@ -27,28 +27,24 @@ public class AmuletMaster : BaseCreature
         return new AmuletMaster(Attack, Health);
     }
 
-    public class AmuletMasterBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
+    public class Builder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
     {
-        private readonly List<IFactory> _modificators = new List<IFactory>();
+        private readonly List<IModificatorFactory> _modificators = new List<IModificatorFactory>();
 
         private Health _health;
         private Damage _attack;
 
-        public AmuletMasterBuilder(Damage damage, Health health)
-        {
-            _health = health;
-            _attack = damage;
-        }
+        public Builder() { }
 
-        public ICreatureBuilder AddModificator(IFactory modificator)
+        public ICreatureBuilder AddModificator(IModificatorFactory modificator)
         {
             _modificators.Add(modificator);
             return this;
         }
 
-        public ICreatureBuilder AddModificators(IReadOnlyCollection<IFactory> modificators)
+        public ICreatureBuilder AddModificators(IReadOnlyCollection<IModificatorFactory> modificators)
         {
-            foreach (IFactory factory in modificators)
+            foreach (IModificatorFactory factory in modificators)
             {
                 _modificators.Add(factory);
             }
@@ -71,7 +67,7 @@ public class AmuletMaster : BaseCreature
         public ICreature Build()
         {
             ICreature currCreature = new AmuletMaster(_attack, _health);
-            foreach (IFactory modificator in _modificators)
+            foreach (IModificatorFactory modificator in _modificators)
             {
                 currCreature = modificator.ImposeModification(currCreature);
             }
