@@ -17,8 +17,8 @@ public class Mimic : BaseCreature
         return new Damage(1);
     }
 
-    private Mimic(Damage? attack = null, Health? health = null)
-    : base(attack ?? DefaultAttack(), health ?? DefaultHelth())
+    private Mimic(Damage attack, Health health)
+    : base(attack, health)
     {
     }
 
@@ -43,12 +43,6 @@ public class Mimic : BaseCreature
 
         private Health _health;
         private Damage _attack;
-
-        public MimicBuilder(Damage damage, Health health)
-        {
-            _health = health;
-            _attack = damage;
-        }
 
         public ICreatureBuilder AddModificator(IFactory modificator)
         {
@@ -80,7 +74,7 @@ public class Mimic : BaseCreature
 
         public ICreature Build()
         {
-            var currCreature = new Mimic(_attack, _health);
+            var currCreature = new Mimic(_attack,  _health);
             foreach (IFactory modificator in _modificators)
             {
                 modificator.ImposeModification(currCreature);

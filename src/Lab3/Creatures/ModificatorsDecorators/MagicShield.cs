@@ -12,7 +12,7 @@ public class MagicShield : ICreature
 
     public Health Health => _creature.Health;
 
-    public MagicShield(ICreature creature)
+    public MagicShield(ICreature creature, bool hasShield = true)
     {
         _creature = creature;
         _hasShield = true;
@@ -51,6 +51,6 @@ public class MagicShield : ICreature
 
     public ICreature Clone()
     {
-        return new MagicShield(_creature.Clone());
+        return new MagicShield(_creature.Clone(),  _hasShield);
     }
 }

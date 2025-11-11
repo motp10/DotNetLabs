@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 
-public record Damage
+public readonly record struct Damage
 {
     public static Damage Zero => new Damage(0);
 

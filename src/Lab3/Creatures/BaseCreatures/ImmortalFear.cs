@@ -1,4 +1,7 @@
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
+using Itmo.ObjectOrientedProgramming.Lab3.Builders.SimpleInterfaces;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
+using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 
@@ -16,8 +19,8 @@ public class ImmortalFear : BaseCreature
         return new Damage(4);
     }
 
-    public ImmortalFear(Damage? attack = null, Health? health = null)
-    : base(attack ?? DefaultAttack(), health ?? DefaultHelth())
+    public ImmortalFear(Damage attack, Health health)
+    : base(attack, health)
     {
         _wasResurrected = false;
     }
@@ -36,5 +39,58 @@ public class ImmortalFear : BaseCreature
     public override ICreature Clone()
     {
         return new ImmortalFear(Attack, Health);
+    }
+
+    public class ImmortalFearBuilder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
+    {
+        private readonly List<IFactory> _modificators = new List<IFactory>();
+
+        private Health _health;
+        private Damage _attack;
+
+        public ImmortalFearBuilder(Damage damage, Health health)
+        {
+            _health = health;
+            _attack = damage;
+        }
+
+        public ICreatureBuilder AddModificator(IFactory modificator)
+        {
+            _modificators.Add(modificator);
+            return this;
+        }
+
+        public ICreatureBuilder AddModificators(IReadOnlyCollection<IFactory> modificators)
+        {
+            foreach (IFactory factory in modificators)
+            {
+                _modificators.Add(factory);
+            }
+
+            return this;
+        }
+
+        public IDamageBuilder WithHealth(Health health)
+        {
+            _health = health;
+            return this;
+        }
+
+        public ICreatureBuilder WithAttack(Damage attack)
+        {
+            _attack = attack;
+            return this;
+        }
+
+        public ICreature Build()
+        {
+            var currCreature = new ImmortalFear(_attack, _health);
+            foreach (IFactory modificator in _modificators)
+            {
+                modificator.ImposeModification(currCreature);
+            }
+
+            return currCreature;
+        }
     }
 }
