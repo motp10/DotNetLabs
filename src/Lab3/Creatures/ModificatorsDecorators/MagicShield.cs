@@ -51,6 +51,6 @@ public class MagicShield : ICreature
 
     public ICreature Clone()
     {
-        return new MagicShield(_creature.Clone(),  _hasShield);
+        return new MagicShield(_creature.Clone(), _hasShield);
     }
 }

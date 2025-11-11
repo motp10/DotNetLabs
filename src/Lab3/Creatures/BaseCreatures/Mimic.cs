@@ -76,7 +76,7 @@ public class Mimic : BaseCreature
 
         public ICreature Build()
         {
-            var currCreature = new Mimic(_attack,  _health);
+            var currCreature = new Mimic(_attack, _health);
             foreach (IModificatorFactory modificator in _modificators)
             {
                 modificator.ImposeModification(currCreature);
