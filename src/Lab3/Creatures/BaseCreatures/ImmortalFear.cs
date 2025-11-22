@@ -27,7 +27,7 @@ public class ImmortalFear : BaseCreature
 
     public override ICreature Clone()
     {
-        return new ImmortalFear(Attack, Health,  _wasResurrected);
+        return new ImmortalFear(Attack, Health, _wasResurrected);
     }
 
     public class Builder : CreatureBuilder
