@@ -45,7 +45,7 @@ public class BattleAnalyst : BaseCreature
     {
         public override ICreature Build()
         {
-            var currentCreature = new BattleAnalyst(Attack, Health, true);
+            var currentCreature = new BattleAnalyst(Attack, Health);
             foreach (IModificatorFactory modificator in Modificators)
             {
                 modificator.ImposeModification(currentCreature);

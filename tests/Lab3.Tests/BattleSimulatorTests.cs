@@ -213,7 +213,7 @@ public class BattleSimulatorTests
             BattleResult result = battle.Fight();
 
             // Assert
-            Assert.IsType<BattleResult.FirstWinner>(result);
+            Assert.IsType<BattleResult.SecondWinner>(result);
         }
 
         [Fact]
