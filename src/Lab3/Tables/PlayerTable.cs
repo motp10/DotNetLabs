@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
+using Itmo.ObjectOrientedProgramming.Lab3.Potions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tables;
 
@@ -6,10 +7,19 @@ public class PlayerTable
 {
     private readonly List<ICreature> _creatureList;
 
-    private readonly CreaturePeaker _peaker = new CreaturePeaker();
+    private readonly ICreaturePeaker _peaker = new CreaturePeaker();
 
-    public PlayerTable()
+    public void ApplySpell(ISpell spell, int creatureIndex)
     {
+        if (creatureIndex < _creatureList.Count)
+        {
+            spell.Apply(_creatureList[creatureIndex]);
+        }
+    }
+
+    public PlayerTable(ICreaturePeaker? peaker = null)
+    {
+        _peaker = peaker ?? new CreaturePeaker();
         _creatureList = new List<ICreature>();
     }
 

@@ -7,11 +7,21 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class AmuletMasterFactory : ICreatureFactory
 {
-    public ICreatureBuilder MakeBuilder(Damage? damage = null, Health? health = null)
+    public Damage DefaultDammage { get; init; }
+
+    public Health DefaultHealth { get; init; }
+
+    public AmuletMasterFactory()
+    {
+        DefaultDammage = new Damage(5);
+        DefaultHealth = new Health(2);
+    }
+
+    public ICreatureBuilder MakeBuilder()
     {
         return new AmuletMaster.Builder()
-                   .WithHealth(health ?? AmuletMaster.DefaultHelth())
-                   .WithAttack(damage ?? AmuletMaster.DefaultAttack())
+                   .WithHealth(AmuletMaster.DefaultHelth())
+                   .WithAttack(AmuletMaster.DefaultAttack())
                    .AddModificator(new AttackSkillModificatorFactory())
                    .AddModificator(new MagicShieldModificatorFactory());
     }

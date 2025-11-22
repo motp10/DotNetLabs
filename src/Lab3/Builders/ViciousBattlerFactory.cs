@@ -6,10 +6,20 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class ViciousBattlerFactory : ICreatureFactory
 {
-    public ICreatureBuilder MakeBuilder(Damage? damage = null, Health? health = null)
+    public Damage DefaultDammage { get; init; }
+
+    public Health DefaultHealth { get; init; }
+
+    public ViciousBattlerFactory()
+    {
+        DefaultDammage = new Damage(1);
+        DefaultHealth = new Health(6);
+    }
+
+    public ICreatureBuilder MakeBuilder()
     {
         return new ViciousBattler.Builder()
-            .WithHealth(health ?? ViciousBattler.DefaultHelth())
-            .WithAttack(damage ?? ViciousBattler.DefaultAttack());
+            .WithHealth(ViciousBattler.DefaultHelth())
+            .WithAttack(ViciousBattler.DefaultAttack());
     }
 }

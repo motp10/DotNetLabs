@@ -4,15 +4,9 @@ public record BattleResult
 {
     private BattleResult() { }
 
-    public record Draw : BattleResult
-    {
-    }
+    public record Draw : BattleResult { }
 
-    public record FirstWinner : BattleResult
-    {
-    }
+    public record FirstWinner : BattleResult { }
 
-    public record SecondWinner : BattleResult
-    {
-    }
+    public record SecondWinner : BattleResult { }
 }

@@ -6,10 +6,20 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class MimicFactory : ICreatureFactory
 {
-    public ICreatureBuilder MakeBuilder(Damage? damage = null, Health? health = null)
+    public Damage DefaultDammage { get; init; }
+
+    public Health DefaultHealth { get; init; }
+
+    public MimicFactory()
+    {
+        DefaultDammage = new Damage(1);
+        DefaultHealth = new Health(1);
+    }
+
+    public ICreatureBuilder MakeBuilder()
     {
         return new Mimic.Builder()
-            .WithHealth(health ?? Mimic.DefaultHelth())
-            .WithAttack(damage ?? Mimic.DefaultAttack());
+            .WithHealth(Mimic.DefaultHelth())
+            .WithAttack(Mimic.DefaultAttack());
     }
 }

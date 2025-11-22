@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tables;
 
-public class CreaturePeaker
+public class CreaturePeaker : ICreaturePeaker
 {
     public ICreature? GiveRandomAttackCreature(IReadOnlyList<ICreature> creaturesList)
     {

@@ -303,7 +303,7 @@ public class BattleSimulatorTests
         public void MirrorSpellTest()
         {
             // Arrange
-            ICreature creature = new BattleAnalystFactory().MakeBuilder(new Damage(1), new Health(5)).Build();
+            ICreature creature = new BattleAnalystFactory().MakeBuilder().WithHealth(new Health(5)).WithAttack(new Damage(1)).Build();
 
             // Act
             var spell = new MirrorSpell();

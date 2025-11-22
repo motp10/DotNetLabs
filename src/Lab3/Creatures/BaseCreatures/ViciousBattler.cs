@@ -1,5 +1,4 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Builders.CreaturesBuilders;
-using Itmo.ObjectOrientedProgramming.Lab3.Builders.SimpleInterfaces;
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.ModificationFactories;
 
@@ -34,52 +33,17 @@ public class ViciousBattler : BaseCreature
         return new ViciousBattler(Attack, Health);
     }
 
-    public class Builder : ICreatureBuilder, IDamageBuilder, IHealthBuilder
+    public class Builder : CreatureBuilder
     {
-        private readonly List<IModificatorFactory> _modificators = new List<IModificatorFactory>();
-
-        private Health _health;
-        private Damage _attack;
-
-        public Builder() { }
-
-        public ICreatureBuilder AddModificator(IModificatorFactory modificator)
+        public override ICreature Build()
         {
-            _modificators.Add(modificator);
-            return this;
-        }
-
-        public ICreatureBuilder AddModificators(IReadOnlyCollection<IModificatorFactory> modificators)
-        {
-            foreach (IModificatorFactory factory in modificators)
+            var currentCreature = new ViciousBattler(Attack, Health);
+            foreach (IModificatorFactory modificator in Modificators)
             {
-                _modificators.Add(factory);
+                modificator.ImposeModification(currentCreature);
             }
 
-            return this;
-        }
-
-        public IDamageBuilder WithHealth(Health health)
-        {
-            _health = health;
-            return this;
-        }
-
-        public ICreatureBuilder WithAttack(Damage attack)
-        {
-            _attack = attack;
-            return this;
-        }
-
-        public ICreature Build()
-        {
-            var currCreature = new ViciousBattler(_attack, _health);
-            foreach (IModificatorFactory modificator in _modificators)
-            {
-                modificator.ImposeModification(currCreature);
-            }
-
-            return currCreature;
+            return currentCreature;
         }
     }
 }
