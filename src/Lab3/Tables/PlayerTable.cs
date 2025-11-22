@@ -13,7 +13,7 @@ public class PlayerTable
     {
         if (creatureIndex < _creatureList.Count)
         {
-            spell.Apply(_creatureList[creatureIndex]);
+            _creatureList[creatureIndex] = spell.Apply(_creatureList[creatureIndex]);
         }
     }
 
