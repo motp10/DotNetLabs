@@ -8,6 +8,14 @@ public class TableBuilder : ITableBuilder
 
     private readonly List<ICreature> _creatureList = new List<ICreature>();
 
+    private ICreaturePeaker? _peaker;
+
+    public ITableBuilder WithPeacker(ICreaturePeaker peaker)
+    {
+        _peaker = peaker;
+        return this;
+    }
+
     public ITableBuilder AddCreature(ICreature creature)
     {
         if (_creatureList.Count == MaxCreatureCount)
@@ -43,6 +51,11 @@ public class TableBuilder : ITableBuilder
 
     public PlayerTable Build()
     {
-        return new PlayerTable(_creatureList);
+        if (_peaker == null)
+        {
+            throw new Exception("No peaker set");
+        }
+
+        return new PlayerTable(_creatureList, _peaker);
     }
 }

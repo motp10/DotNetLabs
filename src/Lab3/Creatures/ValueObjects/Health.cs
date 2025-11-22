@@ -6,6 +6,11 @@ public readonly record struct Health
 
     public Health(int value)
     {
+        if (value < 0)
+        {
+            throw new Exception("Health value cannot be negative");
+        }
+
         Value = value;
     }
 }

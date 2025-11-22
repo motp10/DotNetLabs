@@ -10,7 +10,7 @@ public readonly record struct Damage
     {
         if (value < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Value cannot be negative.");
+            value = 0;
         }
 
         Value = value;

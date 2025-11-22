@@ -4,5 +4,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Potions;
 
 public interface ISpell
 {
-    ICreature Apply(ICreature creature);
+    ICreature Apply(ICreature currentCreature);
 }

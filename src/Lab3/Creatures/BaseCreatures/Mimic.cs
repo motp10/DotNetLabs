@@ -6,16 +6,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 
 public class Mimic : BaseCreature
 {
-    public static Health DefaultHelth()
-    {
-        return new Health(1);
-    }
-
-    public static Damage DefaultAttack()
-    {
-        return new Damage(1);
-    }
-
     private Mimic(Damage attack, Health health)
     : base(attack, health)
     {

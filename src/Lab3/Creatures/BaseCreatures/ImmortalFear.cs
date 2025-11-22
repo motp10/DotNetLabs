@@ -8,20 +8,10 @@ public class ImmortalFear : BaseCreature
 {
     private bool _wasResurrected;
 
-    public static Health DefaultHelth()
-    {
-        return new Health(4);
-    }
-
-    public static Damage DefaultAttack()
-    {
-        return new Damage(4);
-    }
-
-    public ImmortalFear(Damage attack, Health health)
+    public ImmortalFear(Damage attack, Health health, bool wasResurrected = false)
     : base(attack, health)
     {
-        _wasResurrected = false;
+        _wasResurrected = wasResurrected;
     }
 
     public override void ReceiveDamage(Damage damage)
@@ -37,7 +27,7 @@ public class ImmortalFear : BaseCreature
 
     public override ICreature Clone()
     {
-        return new ImmortalFear(Attack, Health);
+        return new ImmortalFear(Attack, Health,  _wasResurrected);
     }
 
     public class Builder : CreatureBuilder

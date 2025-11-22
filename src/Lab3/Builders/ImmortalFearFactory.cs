@@ -6,20 +6,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class ImmortalFearFactory : ICreatureFactory
 {
-    public Damage DefaultDammage { get; init; }
+    private const int _defaulDamageValue = 4;
+    private const int _defaultHealthValue = 4;
 
-    public Health DefaultHealth { get; init; }
+    private Damage DefaultDamage() => new Damage(_defaulDamageValue);
 
-    public ImmortalFearFactory()
-    {
-        DefaultDammage = new Damage(4);
-        DefaultHealth = new Health(4);
-    }
+    private Health DefaultHealth() => new Health(_defaultHealthValue);
+
+    public ImmortalFearFactory() { }
 
     public ICreatureBuilder MakeBuilder()
     {
         return new ImmortalFear.Builder()
-            .WithHealth(ImmortalFear.DefaultHelth())
-            .WithAttack(ImmortalFear.DefaultAttack());
+            .WithHealth(DefaultHealth())
+            .WithAttack(DefaultDamage());
     }
 }

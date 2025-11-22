@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Creatures;
+using Itmo.ObjectOrientedProgramming.Lab3.Creatures.ValueObjects;
 using Itmo.ObjectOrientedProgramming.Lab3.Potions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tables;
@@ -7,7 +8,7 @@ public class PlayerTable
 {
     private readonly List<ICreature> _creatureList;
 
-    private readonly ICreaturePeaker _peaker = new CreaturePeaker();
+    private readonly ICreaturePeaker _peaker;
 
     public void ApplySpell(ISpell spell, int creatureIndex)
     {
@@ -17,30 +18,37 @@ public class PlayerTable
         }
     }
 
-    public PlayerTable(ICreaturePeaker? peaker = null)
-    {
-        _peaker = peaker ?? new CreaturePeaker();
-        _creatureList = new List<ICreature>();
-    }
-
-    public PlayerTable(IReadOnlyCollection<ICreature> creatures)
+    public PlayerTable(IReadOnlyCollection<ICreature> creatures, ICreaturePeaker peaker)
     {
         _creatureList = creatures.ToList();
+        _peaker = peaker;
     }
 
     public PlayerTable Clone()
     {
         var copiedCreatures = _creatureList.Select(creature => creature.Clone()).ToList();
-        return new PlayerTable(copiedCreatures);
+        return new PlayerTable(copiedCreatures, _peaker);
     }
 
     public ICreature? GiveRandomAttackCreature()
     {
-        return _peaker.GiveRandomAttackCreature(_creatureList);
+        var ableToAttackCreatures = _creatureList.Where(c => !c.IsDead() && c.Attack != Damage.Zero).ToList();
+        if (ableToAttackCreatures.Count == 0)
+        {
+            return null;
+        }
+
+        return _peaker.GiveRandomCreature(ableToAttackCreatures);
     }
 
     public ICreature? GiveRandomDeffenceCreature()
     {
-        return _peaker.GiveRandomDeffenceCreature(_creatureList);
+        var aliveCreatures = _creatureList.Where(c => !c.IsDead()).ToList();
+        if (aliveCreatures.Count == 0)
+        {
+            return null;
+        }
+
+        return _peaker.GiveRandomCreature(aliveCreatures);
     }
 }

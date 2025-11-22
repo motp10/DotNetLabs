@@ -6,16 +6,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Creatures.BaseCreatures;
 
 public class BattleAnalyst : BaseCreature
 {
-    public static Health DefaultHelth()
-    {
-        return new Health(4);
-    }
-
-    public static Damage DefaultAttack()
-    {
-        return new Damage(2);
-    }
-
     private bool _isBoosted;
 
     private BattleAnalyst(Damage attack, Health health, bool boost = false)

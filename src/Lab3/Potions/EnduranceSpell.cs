@@ -5,9 +5,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Potions;
 
 public class EnduranceSpell : ISpell
 {
-    public ICreature Apply(ICreature creature)
+    private const int IncreceHealthValue = 5;
+
+    public ICreature Apply(ICreature currentCreature)
     {
-        var newHealth = new Health(creature.Health.Value + 5);
+        ICreature creature = currentCreature.Clone();
+        var newHealth = new Health(creature.Health.Value + IncreceHealthValue);
         creature.SetHealth(newHealth);
         return creature;
     }

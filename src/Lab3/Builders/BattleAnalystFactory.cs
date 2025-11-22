@@ -6,20 +6,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Builders;
 
 public class BattleAnalystFactory : ICreatureFactory
 {
-    public Damage DefaultDammage { get; init; }
+    private const int _defaulDamageValue = 2;
+    private const int _defaultHealthValue = 4;
 
-    public Health DefaultHealth { get; init; }
+    private Damage DefaultDamage() => new Damage(_defaulDamageValue);
 
-    public BattleAnalystFactory()
-    {
-        DefaultDammage = new Damage(2);
-        DefaultHealth = new Health(4);
-    }
+    private Health DefaultHealth() => new Health(_defaultHealthValue);
+
+    public BattleAnalystFactory() { }
 
     public ICreatureBuilder MakeBuilder()
     {
         return new BattleAnalyst.Builder()
-            .WithHealth(BattleAnalyst.DefaultHelth())
-            .WithAttack(BattleAnalyst.DefaultAttack());
+            .WithHealth(DefaultHealth())
+            .WithAttack(DefaultDamage());
     }
 }

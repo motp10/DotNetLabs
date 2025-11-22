@@ -28,8 +28,7 @@ public abstract class BaseCreature : ICreature
     public virtual void ReceiveDamage(Damage damage)
     {
         if (IsDead()) return;
-
-        Health = new Health(Health.Value - damage.Value);
+        Health = new Health(Math.Max(Health.Value - damage.Value, 0));
     }
 
     public void SetHealth(Health newHealth)
