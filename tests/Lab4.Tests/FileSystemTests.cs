@@ -94,4 +94,21 @@ public class FileSystemTests
             }
         }
     }
+
+    [Fact]
+    public void TreeListPatse()
+    {
+        string s = "tree list -d 2";
+        IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
+        var fabric = new ParserFabric();
+        SimpleParser parser = fabric.Make();
+        enumerator.MoveNext();
+        ParseResultType pr = parser.Parse(enumerator);
+
+        if (pr is ParseResultType.Success p)
+        {
+            ICommandBuilder b = p.Builder;
+            Assert.IsType<TreeListBuilder>(b);
+        }
+    }
 }

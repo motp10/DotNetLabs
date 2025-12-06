@@ -123,7 +123,11 @@ public abstract class CommandNode : IFlagChain, IArgumentChain, ISubcommandChain
     {
         if (NextFlag != null)
         {
-            return NextFlag.TryParse(commandBuilder, tokens);
+            while (true)
+            {
+                NextFlag.TryParse(commandBuilder, tokens);
+                if (!tokens.MoveNext()) return new ParseResultType.Success(commandBuilder);
+            }
         }
 
         return new ParseResultType.Success(commandBuilder);

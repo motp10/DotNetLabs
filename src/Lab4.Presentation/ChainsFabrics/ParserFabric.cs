@@ -43,9 +43,10 @@ public class ParserFabric
         var treeGoTo = new TreeGoToNode();
         treeGoTo.AddNextArgument(new PathNode<TreeGoToBuilder>());
         var treeList = new TreeListNode();
-        var treeListShow = new DepthNode<TreeListBuilder>();
-        treeListShow.AddValueNode(new FlagDepthValue<TreeListBuilder>());
-        treeList.AddNextFlag(new DepthNode<TreeListBuilder>());
+        var treeDepthFlag = new DepthNode<TreeListBuilder>();
+        treeDepthFlag.AddValueNode(new FlagDepthValue<TreeListBuilder>());
+        treeList.AddNextFlag(treeDepthFlag);
+        treeGoTo.AddNextNode(treeList);
         treeNode.AddNextSubcommand(treeGoTo).AddNextSubcommand(treeList);
         FileNode root = fileNode;
         root.AddNextNode(connectNode).AddNextNode(disconnectNode).AddNextNode(treeNode);

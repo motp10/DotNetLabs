@@ -16,8 +16,9 @@ public class TreeListNode : CommandNode
                 if (NextSubcommand != null) return NextSubcommandParse(commandBuilder, enumerator);
                 if (NextArgument != null) return NextArgumentParse(new TreeListBuilder(), enumerator);
                 if (NextFlag != null) return NextFlagParse(new TreeListBuilder(), enumerator);
-                return new ParseResultType.Success(new TreeListBuilder());
             }
+
+            return new ParseResultType.Success(new TreeListBuilder());
         }
 
         return NextNodeParse(commandBuilder, enumerator);
