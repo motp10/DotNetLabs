@@ -6,13 +6,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection;
 
 public class FileSystemConnector
 {
-    private readonly IFileSystemConnectionCore _core;
+    private IFileSystemConnectionCore _core;
 
     public string AbsolutePath => _core.AbsolutePath;
 
     public string CurrentPath => _core.CurrentPath;
 
     public IFileSystem FileSystem => _core.FileSystem;
+
+    public FileSystemConnector()
+    {
+        _core = new FileSystemConnectionCore(new EmptyFileSystem());
+    }
 
     public FileSystemConnector(IFileSystem fileSystem)
     {
@@ -24,8 +29,9 @@ public class FileSystemConnector
         _core = core;
     }
 
-    public void Connect(string absolutePath)
+    public void Connect(string absolutePath, IFileSystem fileSystem)
     {
+        _core = new FileSystemConnectionCore(fileSystem);
         _core.Connect(absolutePath);
     }
 

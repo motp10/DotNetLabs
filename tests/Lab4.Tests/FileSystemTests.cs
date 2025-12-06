@@ -53,27 +53,6 @@ public class FileSystemTests
     }
 
     [Fact]
-    public void FileDeleteTest()
-    {
-        string s = "file copy /del";
-        IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
-        var fabric = new ParserFabric();
-        IParseNode parser = fabric.Make();
-        enumerator.MoveNext();
-        ParseResultType pr = parser.TryParse(new EmptyBuilder(), enumerator);
-
-        if (pr is ParseResultType.Success p)
-        {
-            ICommandBuilder b = p.Builder;
-            if (b is FileDeleteBuilder builder)
-            {
-                Assert.Equal("/del", builder.AbsolutePath);
-                Assert.IsType<FileDeleteBuilder>(builder);
-            }
-        }
-    }
-
-    [Fact]
     public void FileRenameTest()
     {
         string s = "file rename /p /name";

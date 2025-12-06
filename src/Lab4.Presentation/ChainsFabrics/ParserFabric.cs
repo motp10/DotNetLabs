@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers.ArgumentNodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers.FlagNodes;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagValueParsers.FlagValueNode;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagValueParsers.FlagValueNodes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.ChainsFabrics;
 
