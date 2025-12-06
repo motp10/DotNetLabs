@@ -8,6 +8,8 @@ public abstract class FlagNode<T> : IFlagChain where T : ICommandBuilder
 {
     public IFlagChain? NextNode { get; set; }
 
+    public IParseNode? FlagValue { get; set; }
+
     public abstract string TokenName { get; }
 
     public IFlagChain AddNextFlag(IFlagChain node)
@@ -24,6 +26,12 @@ public abstract class FlagNode<T> : IFlagChain where T : ICommandBuilder
         return this;
     }
 
+    public IFlagChain AddValueNode(IParseNode node)
+    {
+        FlagValue = node;
+        return this;
+    }
+
     public virtual void AddNextNode(FlagNode<T>? node)
     {
         NextNode = node;
@@ -35,8 +43,8 @@ public abstract class FlagNode<T> : IFlagChain where T : ICommandBuilder
 
         if (enumerator.Current == TokenName)
         {
-            result = NextFlagParse(commandBuilder, enumerator);
-            if (result is ParseResultType.Failure) return NextFlagParse(commandBuilder, enumerator);
+            result = NextValueParse(commandBuilder, enumerator);
+            if (result is ParseResultType.Failure) return new ParseResultType.Failure();
         }
 
         return NextFlagParse(commandBuilder, enumerator);
@@ -50,6 +58,16 @@ public abstract class FlagNode<T> : IFlagChain where T : ICommandBuilder
         }
 
         return new ParseResultType.Success(commandBuilder);
+    }
+
+    public virtual ParseResultType NextValueParse(T commandBuilder, IEnumerator<string> tokens)
+    {
+        if (FlagValue != null)
+        {
+            return FlagValue.TryParse(commandBuilder, tokens);
+        }
+
+        return new ParseResultType.Failure();
     }
 
     ParseResultType IParseNode.TryParse(ICommandBuilder commandBuilder, IEnumerator<string> enumerator)

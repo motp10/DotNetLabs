@@ -69,6 +69,12 @@ public class LocalFileSystem : IFileSystem
         return new LocalFileSystemComponentsIterator(root);
     }
 
+    public bool IsName(string name)
+    {
+        if (name.Contains('/', StringComparison.Ordinal) || name.Contains('.', StringComparison.Ordinal)) return false;
+        return true;
+    }
+
     private sealed class Validator
     {
         public bool IsValidPath(string path, string currentDirectory)

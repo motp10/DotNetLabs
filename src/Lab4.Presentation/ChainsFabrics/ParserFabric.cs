@@ -3,6 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers.ArgumentNodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers.FlagNodes;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagValueParsers.FlagValueNode;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.ChainsFabrics;
 
@@ -31,6 +32,8 @@ public class ParserFabric
 
         var fileShowNode = new FIleShowNode();
         fileShowNode.AddNextArgument(new PathNode<FileShowBuilder>());
+        var fileShowFlag = new ModeNode<FileShowBuilder>();
+        fileShowFlag.AddValueNode(new FileShowMode<FileShowBuilder>());
         fileShowNode.AddNextFlag(new ModeNode<FileShowBuilder>());
 
         fileCopyNode.AddNextNode(fileMoveNode).AddNextNode(fileDeleteNode).AddNextNode(fileRenameNode).AddNextNode(fileShowNode);
@@ -40,6 +43,8 @@ public class ParserFabric
         var treeGoTo = new TreeGoToNode();
         treeGoTo.AddNextArgument(new PathNode<TreeGoToBuilder>());
         var treeList = new TreeListNode();
+        var treeListShow = new DepthNode<TreeListBuilder>();
+        treeListShow.AddValueNode(new FlagDepthValue<TreeListBuilder>());
         treeList.AddNextFlag(new DepthNode<TreeListBuilder>());
         treeNode.AddNextSubcommand(treeGoTo).AddNextSubcommand(treeList);
         FileNode root = fileNode;

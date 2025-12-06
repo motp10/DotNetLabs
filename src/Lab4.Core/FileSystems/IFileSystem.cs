@@ -15,6 +15,8 @@ public interface IFileSystem
 
     IComponentsIterator GetIterator(string root);
 
+    bool IsName(string name);
+
     string GetFileText(string path);
 
     bool IsExist(string fileName);

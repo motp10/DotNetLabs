@@ -13,11 +13,7 @@ public class DepthNode<T> : FlagNode<T> where T : TreeListBuilder
         {
             if (enumerator.MoveNext())
             {
-                if (int.TryParse(enumerator.Current, out int number))
-                {
-                    commandBuilder.WithPadding(number);
-                    return new ParseResultType.Success(commandBuilder);
-                }
+                NextFlagParse(commandBuilder, enumerator);
             }
 
             return new ParseResultType.Failure();

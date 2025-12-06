@@ -69,4 +69,9 @@ public class EmptyFileSystem : IFileSystem
     {
         throw new NotImplementedException();
     }
+
+    public bool IsName(string name)
+    {
+        return false;
+    }
 }

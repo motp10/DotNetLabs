@@ -13,7 +13,7 @@ public class ModeNode<T> : FlagNode<T> where T : FileShowBuilder
         {
             if (enumerator.MoveNext())
             {
-                return NextFlagParse(commandBuilder, enumerator);
+                NextFlagParse(commandBuilder, enumerator);
             }
 
             return new ParseResultType.Failure();
