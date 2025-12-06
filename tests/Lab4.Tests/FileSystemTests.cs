@@ -14,9 +14,9 @@ public class FileSystemTests
         string s = "file copy /s /d";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
-        IParseNode parser = fabric.Make();
+        SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
-        ParseResultType pr = parser.TryParse(new EmptyBuilder(), enumerator);
+        ParseResultType pr = parser.Parse(enumerator);
 
         if (pr is ParseResultType.Success p)
         {
@@ -36,9 +36,9 @@ public class FileSystemTests
         string s = "file move /s /d";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
-        IParseNode parser = fabric.Make();
+        SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
-        ParseResultType pr = parser.TryParse(new EmptyBuilder(), enumerator);
+        ParseResultType pr = parser.Parse(enumerator);
 
         if (pr is ParseResultType.Success p)
         {
@@ -58,9 +58,9 @@ public class FileSystemTests
         string s = "file rename /p /name";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
-        IParseNode parser = fabric.Make();
+        SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
-        ParseResultType pr = parser.TryParse(new EmptyBuilder(), enumerator);
+        ParseResultType pr = parser.Parse(enumerator);
 
         if (pr is ParseResultType.Success p)
         {
@@ -80,9 +80,9 @@ public class FileSystemTests
         string s = "file delete /p";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
-        IParseNode parser = fabric.Make();
+        SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
-        ParseResultType pr = parser.TryParse(new EmptyBuilder(), enumerator);
+        ParseResultType pr = parser.Parse(enumerator);
 
         if (pr is ParseResultType.Success p)
         {

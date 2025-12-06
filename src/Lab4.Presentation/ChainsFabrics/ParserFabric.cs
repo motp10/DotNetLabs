@@ -9,7 +9,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.ChainsFabrics;
 
 public class ParserFabric
 {
-    public IParseNode Make()
+    public SimpleParser Make()
     {
         var connectNode = new ConnectNode();
         connectNode.AddNextArgument(new PathNode<ConnectBuilder>());
@@ -49,6 +49,6 @@ public class ParserFabric
         treeNode.AddNextSubcommand(treeGoTo).AddNextSubcommand(treeList);
         FileNode root = fileNode;
         root.AddNextNode(connectNode).AddNextNode(disconnectNode).AddNextNode(treeNode);
-        return root;
+        return new SimpleParser(root);
     }
 }
