@@ -10,7 +10,7 @@ public class Connect : ICommand
 
     private readonly IFileSystem _fileSystem;
 
-    public Connect(string absolutePath,  IFileSystem fileSystem)
+    public Connect(string absolutePath, IFileSystem fileSystem)
     {
         _absolutePath = absolutePath;
         _fileSystem = fileSystem;
