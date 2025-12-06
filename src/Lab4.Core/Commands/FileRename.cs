@@ -20,6 +20,6 @@ public class FileRename : ICommand
         string resolvedPath = connector.FileSystem.ResolvePath(_path, connector.CurrentPath);
         if (!connector.FileSystem.IsExist(resolvedPath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsInRoot(resolvedPath, connector.AbsolutePath)) return new CommandResultType.Failure();
-        return connector.FileSystem.Rename(_path,  _name);
+        return connector.FileSystem.Rename(_path, _name);
     }
 }

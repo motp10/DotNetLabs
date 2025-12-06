@@ -10,7 +10,7 @@ public class SourcePathNode<T> : ArgumentNode<T> where T : ISourcePathBuilder
         commandBuilder.WithSourcePath(enumerator.Current);
         if (enumerator.MoveNext())
         {
-            return ParseNextArgument(commandBuilder,  enumerator);
+            return ParseNextArgument(commandBuilder, enumerator);
         }
 
         return new ParseResultType.Failure();

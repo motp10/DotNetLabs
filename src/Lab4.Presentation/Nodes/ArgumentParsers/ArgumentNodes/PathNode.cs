@@ -10,7 +10,7 @@ public class PathNode<T> : ArgumentNode<T> where T : IPathBuilder
         if (enumerator.MoveNext())
         {
             commandBuilder.WithPath(enumerator.Current);
-            return ParseNextArgument(commandBuilder,  enumerator);
+            return ParseNextArgument(commandBuilder, enumerator);
         }
 
         return new ParseResultType.Failure();

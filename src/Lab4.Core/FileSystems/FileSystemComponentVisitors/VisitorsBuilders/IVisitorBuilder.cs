@@ -20,6 +20,6 @@ public interface IVisitorBuilder
 
     IFileSystemComponentVisitor Build()
     {
-        return new FormatingVisitor(Padding, Identation, FileSymbols,  DirectorySymbols);
+        return new FormatingVisitor(Padding, Identation, FileSymbols, DirectorySymbols);
     }
 }

@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.Primary
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
 
-public class FileMoveBuilder : ISourcePathBuilder,  IDestinationPathBuilder
+public class FileMoveBuilder : ISourcePathBuilder, IDestinationPathBuilder
 {
     public string SourceFile { get; private set; } = string.Empty;
 

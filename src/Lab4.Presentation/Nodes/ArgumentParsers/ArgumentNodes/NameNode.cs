@@ -10,7 +10,7 @@ public class NameNode<T> : ArgumentNode<T> where T : INameBuilder
         if (enumerator.MoveNext())
         {
             commandBuilder.WithName(enumerator.Current);
-            return ParseNextArgument(commandBuilder,  enumerator);
+            return ParseNextArgument(commandBuilder, enumerator);
         }
 
         return new ParseResultType.Failure();

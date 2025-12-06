@@ -28,6 +28,6 @@ public class FileMove : ICommand
         if (!connector.FileSystem.IsExist(resolevedSourcePath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsExist(resolevedDestinationPath)) return new CommandResultType.Failure();
 
-        return connector.FileSystem.Move(resolevedSourcePath,  resolevedDestinationPath);
+        return connector.FileSystem.Move(resolevedSourcePath, resolevedDestinationPath);
     }
 }

@@ -29,6 +29,6 @@ public class FileCopy : ICommand
         if (!connector.FileSystem.IsExist(resolevedSourcePath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsExist(resolevedDestinationPath)) return new CommandResultType.Failure();
 
-        return connector.FileSystem.Copy(_sourceFile,  _destinationFile);
+        return connector.FileSystem.Copy(_sourceFile, _destinationFile);
     }
 }
