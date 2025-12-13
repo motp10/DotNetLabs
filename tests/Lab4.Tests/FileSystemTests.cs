@@ -11,13 +11,17 @@ public class FileSystemTests
     [Fact]
     public void FileCopyTest()
     {
+        // Arrange
         string s = "file copy /s /d";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
+
+        // Act
         SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
         ParseResultType pr = parser.Parse(enumerator);
 
+        // Assert
         if (pr is ParseResultType.Success p)
         {
             ICommandBuilder b = p.Builder;
@@ -33,13 +37,17 @@ public class FileSystemTests
     [Fact]
     public void FileMoveTest()
     {
+        // Arrange
         string s = "file move /s /d";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
         SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
+
+        // Act
         ParseResultType pr = parser.Parse(enumerator);
 
+        // Assert
         if (pr is ParseResultType.Success p)
         {
             ICommandBuilder b = p.Builder;
@@ -55,13 +63,17 @@ public class FileSystemTests
     [Fact]
     public void FileRenameTest()
     {
+        // Arrange
         string s = "file rename /p /name";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
         SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
+
+        // Act
         ParseResultType pr = parser.Parse(enumerator);
 
+        // Assert
         if (pr is ParseResultType.Success p)
         {
             ICommandBuilder b = p.Builder;
@@ -77,13 +89,17 @@ public class FileSystemTests
     [Fact]
     public void FileDeleteNode()
     {
+        // Arrange
         string s = "file delete /p";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
         SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
+
+        // Act
         ParseResultType pr = parser.Parse(enumerator);
 
+        // Assert
         if (pr is ParseResultType.Success p)
         {
             ICommandBuilder b = p.Builder;
@@ -98,13 +114,17 @@ public class FileSystemTests
     [Fact]
     public void TreeListPatse()
     {
+        // Arrange
         string s = "tree list -d 2";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         var fabric = new ParserFabric();
         SimpleParser parser = fabric.Make();
         enumerator.MoveNext();
+
+        // Act
         ParseResultType pr = parser.Parse(enumerator);
 
+        // Assert
         if (pr is ParseResultType.Success p)
         {
             ICommandBuilder b = p.Builder;

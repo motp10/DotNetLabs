@@ -1,17 +1,17 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponents;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 public interface IFileSystem
 {
-    CommandResultType Delete(string fileName);
+    FileSystemResultType Delete(string fileName);
 
-    CommandResultType Move(string sourceFile, string destinationFile);
+    FileSystemResultType Move(string sourceFile, string destinationFile);
 
-    CommandResultType Copy(string sourceFile, string destinationFile);
+    FileSystemResultType Copy(string sourceFile, string destinationFile);
 
-    CommandResultType Rename(string path, string name);
+    FileSystemResultType Rename(string path, string name);
 
     IComponentsIterator GetIterator(string root);
 

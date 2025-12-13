@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ResultTypes;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
@@ -28,6 +29,14 @@ public class FileMove : ICommand
         if (!connector.FileSystem.IsExist(resolevedSourcePath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsExist(resolevedDestinationPath)) return new CommandResultType.Failure();
 
-        return connector.FileSystem.Move(resolevedSourcePath, resolevedDestinationPath);
+        FileSystemResultType result = connector.FileSystem.Move(resolevedSourcePath, resolevedDestinationPath);
+        if (result is FileSystemResultType.Succes)
+        {
+            return new CommandResultType.Succes();
+        }
+        else
+        {
+            return new CommandResultType.Failure();
+        }
     }
 }

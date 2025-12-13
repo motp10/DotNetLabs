@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
 
-public class ConnectBuilder : IPathBuilder, IWithFileSystem
+public class ConnectBuilder : IPathBuilder, IWithFileSystemBuilder
 {
     public string AbsolutePath { get; private set; } = string.Empty;
 

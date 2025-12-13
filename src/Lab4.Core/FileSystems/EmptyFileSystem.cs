@@ -1,38 +1,38 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponents;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 public class EmptyFileSystem : IFileSystem
 {
-    public CommandResultType Delete(string fileName)
+    public FileSystemResultType Delete(string fileName)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
-    public CommandResultType Move(string sourceFile, string destinationFile)
+    public FileSystemResultType Move(string sourceFile, string destinationFile)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
-    public CommandResultType Copy(string sourceFile, string destinationFile)
+    public FileSystemResultType Copy(string sourceFile, string destinationFile)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
-    public CommandResultType Connect(string path)
+    public FileSystemResultType Connect(string path)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
-    public CommandResultType Disconnect()
+    public FileSystemResultType Disconnect()
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
-    public CommandResultType TreeGoTo(string path)
+    public FileSystemResultType TreeGoTo(string path)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
     public IComponentsIterator GetIterator(string root)
@@ -40,9 +40,9 @@ public class EmptyFileSystem : IFileSystem
         throw new NotImplementedException();
     }
 
-    public CommandResultType Rename(string path, string name)
+    public FileSystemResultType Rename(string path, string name)
     {
-        return new CommandResultType.Failure();
+        return new FileSystemResultType.Failure();
     }
 
     public string GetFileText(string path)

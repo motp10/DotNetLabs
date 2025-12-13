@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponents;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 using System.Text;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors;
@@ -9,25 +10,22 @@ public class FormatingVisitor : IFileSystemComponentVisitor
 
     private readonly int _depth;
 
-    private readonly string _fileSymbols;
+    private readonly VIsitorData _data;
 
-    private readonly string _directorySymbols;
-
-    private readonly char _identation;
+    private readonly IWriter _writer;
 
     public string Value => _builder.ToString();
 
-    public FormatingVisitor(int depth, char identation, string fileSymbols, string directorySymbols)
+    public FormatingVisitor(int depth, VIsitorData data, IWriter writer)
     {
         _depth = depth;
-        _fileSymbols = fileSymbols;
-        _directorySymbols = directorySymbols;
-        _identation = identation;
+        _data = data;
+        _writer = writer;
     }
 
     public void Visit(FileFileSystemComponent component)
     {
-        Console.WriteLine($"{new string(' ', _depth * 4) + _fileSymbols} {component.Name}");
+        _writer.Write($"{new string(' ', _depth) + _data.FileSymbols} {component.Name}");
     }
 
     public void Visit(DirectoryFileSystemComponent component)
@@ -35,18 +33,18 @@ public class FormatingVisitor : IFileSystemComponentVisitor
         int currentDepth = 0;
         while (currentDepth < _depth)
         {
-            Console.WriteLine($"{new string(_identation, currentDepth * 4) + _directorySymbols} {component.Name}/");
+            _writer.Write($"{new string(_data.Identation, currentDepth) + _data.DirectorySymbols} {component.Name}/");
             ++currentDepth;
             while (component.HasNextcomponent())
             {
                 IFileSystemComponent currComponent = component.GetNextComponent();
                 if (currComponent is DirectoryFileSystemComponent)
                 {
-                    Console.WriteLine($"{new string(_identation, currentDepth * 4) + _directorySymbols} {currComponent.Name}/");
+                    _writer.Write($"{new string(_data.Identation, currentDepth) + _data.DirectorySymbols} {currComponent.Name}/");
                 }
                 else
                 {
-                    Console.WriteLine($"{new string(_identation, currentDepth * 4) + _fileSymbols} {currComponent.Name}/");
+                    _writer.Write($"{new string(_data.Identation, currentDepth) + _data.FileSymbols} {currComponent.Name}/");
                 }
             }
         }

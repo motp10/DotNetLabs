@@ -1,11 +1,12 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers.FlagNodes;
 
-public class DepthNode<T> : FlagNode<T> where T : TreeListBuilder
+public class DepthNode<T> : CommandNode<T> where T : TreeListBuilder
 {
-    public override string TokenName => "-d";
+    public string TokenName => "-d";
 
     public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
     {
@@ -13,12 +14,17 @@ public class DepthNode<T> : FlagNode<T> where T : TreeListBuilder
         {
             if (enumerator.MoveNext())
             {
-                NextValueParse(commandBuilder, enumerator);
+                commandBuilder.WithDepth(int.Parse(enumerator.Current));
+            }
+
+            while (enumerator.MoveNext())
+            {
+                NextNodeParse(commandBuilder, enumerator);
             }
 
             return new ParseResultType.Failure();
         }
 
-        return NextFlagParse(commandBuilder, enumerator);
+        return NextNodeParse(commandBuilder, enumerator);
     }
 }

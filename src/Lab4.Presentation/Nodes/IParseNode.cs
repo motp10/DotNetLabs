@@ -3,7 +3,9 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes;
 
-public interface IParseNode
+public interface IParseNode<T> where T : ICommandBuilder
 {
-    ParseResultType TryParse(ICommandBuilder commandBuilder, IEnumerator<string> enumerator);
+    ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator);
+
+    IParseNode<T> AddNextNode(IParseNode<T> node);
 }

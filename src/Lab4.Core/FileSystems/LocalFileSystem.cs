@@ -1,35 +1,35 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponents;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
 public class LocalFileSystem : IFileSystem
 {
-    public CommandResultType Delete(string fileName)
+    public FileSystemResultType Delete(string fileName)
     {
         File.Delete(fileName);
-        return new CommandResultType.Succes();
+        return new FileSystemResultType.Succes();
     }
 
-    public CommandResultType Move(string sourceFile, string destinationFile)
+    public FileSystemResultType Move(string sourceFile, string destinationFile)
     {
         File.Move(sourceFile, destinationFile);
-        return new CommandResultType.Succes();
+        return new FileSystemResultType.Succes();
     }
 
-    public CommandResultType Copy(string sourceFile, string destinationFile)
+    public FileSystemResultType Copy(string sourceFile, string destinationFile)
     {
         File.Copy(sourceFile, destinationFile);
-        return new CommandResultType.Succes();
+        return new FileSystemResultType.Succes();
     }
 
-    public CommandResultType Rename(string path, string name)
+    public FileSystemResultType Rename(string path, string name)
     {
         string? parentDir = Path.GetDirectoryName(path);
         string targetPath = Path.Combine(parentDir ?? string.Empty, name);
 
         File.Move(path, targetPath);
-        return new CommandResultType.Succes();
+        return new FileSystemResultType.Succes();
     }
 
     public string GetFileText(string path)

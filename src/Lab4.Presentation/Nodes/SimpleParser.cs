@@ -5,9 +5,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes;
 
 public class SimpleParser
 {
-    private readonly IParseNode _root;
+    private readonly IParseNode<ICommandBuilder> _root;
 
-    public SimpleParser(IParseNode root)
+    public SimpleParser(IParseNode<ICommandBuilder> root)
     {
         _root = root;
     }

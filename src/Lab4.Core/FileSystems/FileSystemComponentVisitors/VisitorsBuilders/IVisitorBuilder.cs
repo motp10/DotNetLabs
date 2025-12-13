@@ -1,8 +1,10 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
+
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors.VisitorsBuilders;
 
 public interface IVisitorBuilder
 {
-    int Padding { get; }
+    int Depth { get; }
 
     string FileSymbols { get; }
 
@@ -10,7 +12,9 @@ public interface IVisitorBuilder
 
     char Identation { get; }
 
-    void WithPadding(int padding);
+    IWriter Writer { get; }
+
+    void WithDepth(int padding);
 
     void WithFileSymbols(string symbols);
 
@@ -18,8 +22,10 @@ public interface IVisitorBuilder
 
     void WithIdentation(char symbol);
 
+    void WithWriter(IWriter writer);
+
     IFileSystemComponentVisitor Build()
     {
-        return new FormatingVisitor(Padding, Identation, FileSymbols, DirectorySymbols);
+        return new FormatingVisitor(Depth, new VIsitorData(FileSymbols, DirectorySymbols, Identation), Writer);
     }
 }

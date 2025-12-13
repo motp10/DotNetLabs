@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVi
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
 
-public class TreeListBuilder : IPathBuilder
+public class TreeListBuilder : IPathBuilder, IWithDepthBuilder
 {
     private readonly FormatingVisitorBuilder _builder = new FormatingVisitorBuilder();
 
@@ -15,24 +15,28 @@ public class TreeListBuilder : IPathBuilder
         return this;
     }
 
-    public void WithPadding(int padding)
+    public ICommandBuilder WithDepth(int depth)
     {
-        _builder.WithPadding(padding);
+        _builder.WithDepth(depth);
+        return this;
     }
 
-    public void WithFileSymbols(string symbols)
+    public ICommandBuilder WithFileSymbols(string symbols)
     {
         _builder.WithFileSymbols(symbols);
+        return this;
     }
 
-    public void WithDirectorySymbols(string symbols)
+    public ICommandBuilder WithDirectorySymbols(string symbols)
     {
         _builder.WithDirectorySymbols(symbols);
+        return this;
     }
 
-    public void WithIdentation(char symbol)
+    public ICommandBuilder WithIdentation(char symbol)
     {
         _builder.WithIdentation(symbol);
+        return this;
     }
 
     public ICommand Build()

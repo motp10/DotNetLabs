@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.ResultTypes;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.ResultTypes;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
@@ -21,6 +22,15 @@ public class FileRename : ICommand
         if (!connector.FileSystem.IsExist(resolvedPath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsInRoot(resolvedPath, connector.AbsolutePath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsName(_name)) return new CommandResultType.Failure();
-        return connector.FileSystem.Rename(_path, _name);
+
+        FileSystemResultType result = connector.FileSystem.Rename(_path, _name);
+        if (result is FileSystemResultType.Succes)
+        {
+            return new CommandResultType.Succes();
+        }
+        else
+        {
+            return new CommandResultType.Failure();
+        }
     }
 }
