@@ -13,7 +13,6 @@ public class FileMoveNode : CommandNode
     public CommandNode AddSubchain(SourcePathNode<FileMoveBuilder>? node)
     {
         SubChain = node;
-
         return this;
     }
 
@@ -33,7 +32,7 @@ public class FileMoveNode : CommandNode
         {
             if (enumerator.MoveNext())
             {
-               return NextSubchainParse(enumerator);
+                return NextSubchainParse(enumerator);
             }
         }
 
