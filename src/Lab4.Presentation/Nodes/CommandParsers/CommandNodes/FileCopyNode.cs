@@ -4,40 +4,39 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class FileCopyNode<T> : CommandNode<T> where T : ICommandBuilder
+public class FileCopyNode : CommandNode
 {
     public string TokenName => "copy";
 
     public SourcePathNode<FileCopyBuilder>? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(SourcePathNode<FileCopyBuilder>? node)
+    public CommandNode AddSubchain(SourcePathNode<FileCopyBuilder>? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(FileCopyBuilder commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(new FileCopyBuilder(), tokens);
         }
 
-        return new ParseResultType.Success(commandBuilder);
+        return new ParseResultType.Success(new FileCopyBuilder());
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(new FileCopyBuilder(), enumerator);
-                return new ParseResultType.Success(new FileCopyBuilder());
+                return NextSubchainParse(enumerator);
             }
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

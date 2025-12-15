@@ -34,7 +34,7 @@ public class LocalFileSystem : IFileSystem
 
     public string GetFileText(string path)
     {
-        throw new NotImplementedException();
+        return File.ReadAllText(path);
     }
 
     public bool IsExist(string fileName)
@@ -42,21 +42,31 @@ public class LocalFileSystem : IFileSystem
         return File.Exists(fileName);
     }
 
-    public bool IsInRoot(string path, string absolutePath)
-    {
-        var validator = new Validator();
-        return validator.IsValidPath(path, absolutePath);
-    }
-
     public string ResolvePath(string path, string currentPath)
     {
-        var resolver = new Resolver();
-        return resolver.Resolve(path, currentPath);
+        var inputPathSegments = new List<string>(path.Split(Path.DirectorySeparatorChar));
+        var currentPathSegments = new List<string>(currentPath.Split(Path.DirectorySeparatorChar));
+
+        foreach (string segment in inputPathSegments)
+        {
+            if (segment == "..")
+            {
+                if (currentPathSegments.Count > 0) currentPath.Remove(currentPath.Last());
+                break;
+            }
+
+            if (segment != "." && segment != "..")
+            {
+                currentPathSegments.Add(segment);
+            }
+        }
+
+        return "/" + string.Join("/", currentPathSegments);
     }
 
     public bool IsAbsolutePath(string path)
     {
-        return path[0] == '/';
+        return Path.IsPathFullyQualified(path);
     }
 
     public string Combine(string absolutePath, string inputPath)
@@ -73,64 +83,6 @@ public class LocalFileSystem : IFileSystem
     {
         if (name.Contains('/', StringComparison.Ordinal) || name.Contains('.', StringComparison.Ordinal)) return false;
         return true;
-    }
-
-    private sealed class Validator
-    {
-        public bool IsValidPath(string path, string currentDirectory)
-        {
-            string fullPath = Path.GetFullPath(path);
-            string fullRoot = Path.GetFullPath(currentDirectory);
-
-            string[] pathParts = fullPath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
-                .Where(p => p.Length > 0)
-                .ToArray();
-            string[] rootParts = fullRoot.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
-                .Where(p => p.Length > 0)
-                .ToArray();
-
-            if (rootParts.Length > pathParts.Length)
-                return false;
-
-            for (int i = 0; i < rootParts.Length; i++)
-            {
-                if (rootParts[i] != pathParts[i])
-                    return false;
-            }
-
-            return true;
-        }
-    }
-
-    private sealed class Resolver
-    {
-        public string Resolve(string inputPath, string localPath)
-        {
-            string result = ConcatWithCurrentPath(localPath, inputPath);
-            return Path.GetFullPath(result);
-        }
-
-        private string ConcatWithCurrentPath(string currentPath, string inputPath)
-        {
-            var inputPathSegments = new List<string>(inputPath.Split(Path.DirectorySeparatorChar));
-            var currentPathSegments = new List<string>(currentPath.Split(Path.DirectorySeparatorChar));
-
-            foreach (string segment in inputPathSegments)
-            {
-                if (segment == "..")
-                {
-                    if (currentPathSegments.Count > 0) currentPath.Remove(currentPath.Last());
-                    break;
-                }
-
-                if (segment != "." && segment != "..")
-                {
-                    currentPathSegments.Add(segment);
-                }
-            }
-
-            return "/" + string.Join("/", currentPathSegments);
-        }
     }
 
     private class LocalFileSystemComponentsIterator : IComponentsIterator

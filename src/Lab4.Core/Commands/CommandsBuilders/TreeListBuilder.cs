@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors.VisitorsBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
@@ -21,22 +22,9 @@ public class TreeListBuilder : IPathBuilder, IWithDepthBuilder
         return this;
     }
 
-    public ICommandBuilder WithFileSymbols(string symbols)
+    public void WithData(VIsitorData data)
     {
-        _builder.WithFileSymbols(symbols);
-        return this;
-    }
-
-    public ICommandBuilder WithDirectorySymbols(string symbols)
-    {
-        _builder.WithDirectorySymbols(symbols);
-        return this;
-    }
-
-    public ICommandBuilder WithIdentation(char symbol)
-    {
-        _builder.WithIdentation(symbol);
-        return this;
+        _builder.WithData(data);
     }
 
     public ICommand Build()

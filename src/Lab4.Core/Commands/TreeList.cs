@@ -20,11 +20,20 @@ public class TreeList : ICommand
 
     public CommandResultType Execute(FileSystemConnector connector)
     {
-        string resolvedPath = connector.FileSystem.ResolvePath(_path, connector.CurrentPath);
-        if (!connector.FileSystem.IsExist(resolvedPath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsInRoot(resolvedPath, connector.AbsolutePath)) return new CommandResultType.Failure();
+        string newPath = _path;
+        if (connector.FileSystem.IsAbsolutePath(newPath))
+        {
+            newPath = connector.FileSystem.Combine(connector.AbsolutePath, newPath);
+        }
+        else
+        {
+            newPath = connector.FileSystem.ResolvePath(newPath, connector.CurrentPath);
+        }
+
+        if (!connector.FileSystem.IsExist(newPath)) return new CommandResultType.Failure();
+        _builder.WithData(connector.DefaultTreeListSymbols());
         IFileSystemComponentVisitor visitor = _builder.Build();
-        visitor.Visit(new DirectoryFileSystemComponent(resolvedPath, connector.FileSystem.GetIterator(resolvedPath)));
+        visitor.Visit(new DirectoryFileSystemComponent(newPath, connector.FileSystem.GetIterator(newPath)));
         return new CommandResultType.Succes();
     }
 }

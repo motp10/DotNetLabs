@@ -18,9 +18,17 @@ public class FileRename : ICommand
 
     public CommandResultType Execute(FileSystemConnector connector)
     {
-        string resolvedPath = connector.FileSystem.ResolvePath(_path, connector.CurrentPath);
-        if (!connector.FileSystem.IsExist(resolvedPath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsInRoot(resolvedPath, connector.AbsolutePath)) return new CommandResultType.Failure();
+        string newPath = _path;
+        if (connector.FileSystem.IsAbsolutePath(newPath))
+        {
+            newPath = connector.FileSystem.Combine(connector.AbsolutePath, newPath);
+        }
+        else
+        {
+            newPath = connector.FileSystem.ResolvePath(newPath, connector.CurrentPath);
+        }
+
+        if (!connector.FileSystem.IsExist(newPath)) return new CommandResultType.Failure();
         if (!connector.FileSystem.IsName(_name)) return new CommandResultType.Failure();
 
         FileSystemResultType result = connector.FileSystem.Rename(_path, _name);

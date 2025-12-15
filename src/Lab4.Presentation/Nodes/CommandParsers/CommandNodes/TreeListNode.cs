@@ -4,40 +4,40 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class TreeListNode<T> : CommandNode<T> where T : ICommandBuilder
+public class TreeListNode : CommandNode
 {
     public string TokenName => "list";
 
     public DepthNode<TreeListBuilder>? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(DepthNode<TreeListBuilder>? node)
+    public CommandNode AddSubchain(DepthNode<TreeListBuilder>? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(TreeListBuilder commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(new TreeListBuilder(), tokens);
         }
 
-        return new ParseResultType.Success(commandBuilder);
+        return new ParseResultType.Success(new TreeListBuilder());
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(new TreeListBuilder(), enumerator);
+                if (SubChain != null) return NextSubchainParse(enumerator);
                 return new ParseResultType.Success(new TreeListBuilder());
             }
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

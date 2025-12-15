@@ -4,22 +4,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemCompone
 
 public class FormatingVisitorBuilder : IVisitorBuilder
 {
+    private VIsitorData? _data;
+
     public int Depth { get; private set; }
-
-    public string FileSymbols { get; private set; }
-
-    public string DirectorySymbols { get; private set; }
-
-    public char Identation { get; private set; }
 
     public IWriter Writer { get; private set; }
 
     public FormatingVisitorBuilder()
     {
         Depth = -1;
-        FileSymbols = string.Empty;
-        DirectorySymbols = string.Empty;
-        Identation = ' ';
+        _data = null;
         Writer = new ConsoleWriter();
     }
 
@@ -33,23 +27,23 @@ public class FormatingVisitorBuilder : IVisitorBuilder
         throw new NotImplementedException();
     }
 
-    public void WithFileSymbols(string symbols)
+    public void WithData(VIsitorData data)
     {
-        FileSymbols = symbols;
-    }
-
-    public void WithDirectorySymbols(string symbols)
-    {
-        DirectorySymbols = symbols;
-    }
-
-    public void WithIdentation(char symbol)
-    {
-        Identation = symbol;
+        _data = data;
     }
 
     public void WithWriter(IWriter writer)
     {
         Writer = writer;
+    }
+
+    public IFileSystemComponentVisitor Build()
+    {
+        if (_data == null)
+        {
+            throw new Exception("Data is null");
+        }
+
+        return new FormatingVisitor(Depth, _data, Writer);
     }
 }

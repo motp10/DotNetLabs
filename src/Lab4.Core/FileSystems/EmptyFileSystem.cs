@@ -40,6 +40,11 @@ public class EmptyFileSystem : IFileSystem
         throw new NotImplementedException();
     }
 
+    public string Combine(string absolutePath, string inputPath)
+    {
+        throw new NotImplementedException();
+    }
+
     public FileSystemResultType Rename(string path, string name)
     {
         return new FileSystemResultType.Failure();

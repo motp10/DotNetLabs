@@ -1,43 +1,42 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class TreeNode<T> : CommandNode<T> where T : ICommandBuilder
+public class TreeNode : CommandNode
 {
     public string TokenName => "tree";
 
-    public CommandNode<T>? SubChain { get; set; }
+    public CommandNode? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(CommandNode<T>? node)
+    public CommandNode AddSubchain(CommandNode? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(T commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(tokens);
         }
 
         return new ParseResultType.Failure();
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                return NextSubchainParse(commandBuilder, enumerator);
+                return NextSubchainParse(enumerator);
             }
 
             return new ParseResultType.Failure();
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

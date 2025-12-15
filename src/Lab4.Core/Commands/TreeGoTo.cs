@@ -14,11 +14,19 @@ public class TreeGoTo : ICommand
 
     public CommandResultType Execute(FileSystemConnector connector)
     {
-        string newCurrentcPath = connector.FileSystem.ResolvePath(_path, connector.CurrentPath);
-        if (!connector.FileSystem.IsExist(newCurrentcPath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsInRoot(newCurrentcPath, connector.AbsolutePath)) return new CommandResultType.Failure();
+        string newPath = _path;
+        if (connector.FileSystem.IsAbsolutePath(newPath))
+        {
+            newPath = connector.FileSystem.Combine(connector.AbsolutePath, newPath);
+        }
+        else
+        {
+            newPath = connector.FileSystem.ResolvePath(newPath, connector.CurrentPath);
+        }
 
-        connector.Goto(newCurrentcPath);
+        if (!connector.FileSystem.IsExist(newPath)) return new CommandResultType.Failure();
+
+        connector.Goto(newPath);
         return new CommandResultType.Succes();
     }
 }

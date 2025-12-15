@@ -15,13 +15,13 @@ public interface IFileSystem
 
     IComponentsIterator GetIterator(string root);
 
+    string Combine(string absolutePath, string inputPath);
+
     bool IsName(string name);
 
     string GetFileText(string path);
 
     bool IsExist(string fileName);
-
-    bool IsInRoot(string path, string absolutePath);
 
     bool IsAbsolutePath(string path);
 

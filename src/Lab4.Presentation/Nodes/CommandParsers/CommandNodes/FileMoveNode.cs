@@ -4,40 +4,39 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class FileMoveNode<T> : CommandNode<T> where T : ICommandBuilder
+public class FileMoveNode : CommandNode
 {
     public string TokenName => "move";
 
     public SourcePathNode<FileMoveBuilder>? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(SourcePathNode<FileMoveBuilder>? node)
+    public CommandNode AddSubchain(SourcePathNode<FileMoveBuilder>? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(FileMoveBuilder commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(new FileMoveBuilder(), tokens);
         }
 
-        return new ParseResultType.Success(commandBuilder);
+        return new ParseResultType.Success(new FileMoveBuilder());
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(new FileMoveBuilder(), enumerator);
-                return new ParseResultType.Success(new FileMoveBuilder());
+               return NextSubchainParse(enumerator);
             }
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

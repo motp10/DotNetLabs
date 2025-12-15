@@ -5,40 +5,39 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class TreeGoToNode<T> : CommandNode<T> where T : ICommandBuilder
+public class TreeGoToNode : CommandNode
 {
     public string TokenName => "goto";
 
     public PathNode<IPathBuilder>? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(PathNode<IPathBuilder>? node)
+    public CommandNode AddSubchain(PathNode<IPathBuilder>? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(TreeGoToBuilder commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(new FileShowBuilder(), tokens);
         }
 
-        return new ParseResultType.Success(commandBuilder);
+        return new ParseResultType.Success(new FileShowBuilder());
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(new TreeGoToBuilder(), enumerator);
-                return new ParseResultType.Success(new TreeGoToBuilder());
+                return NextSubchainParse(enumerator);
             }
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

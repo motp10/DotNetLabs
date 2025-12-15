@@ -4,40 +4,39 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
-public class FileDeleteNode<T> : CommandNode<T> where T : ICommandBuilder
+public class FileDeleteNode : CommandNode
 {
     public string TokenName => "delete";
 
     public PathNode<FileDeleteBuilder>? SubChain { get; set; }
 
-    public IParseNode<T> AddSubchain(PathNode<FileDeleteBuilder>? node)
+    public CommandNode AddSubchain(PathNode<FileDeleteBuilder>? node)
     {
         SubChain = node;
 
         return this;
     }
 
-    public ParseResultType NextSubchainParse(FileDeleteBuilder commandBuilder, IEnumerator<string> tokens)
+    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
     {
         if (SubChain != null)
         {
-            return SubChain.TryParse(commandBuilder, tokens);
+            return SubChain.TryParse(new FileDeleteBuilder(), tokens);
         }
 
-        return new ParseResultType.Success(commandBuilder);
+        return new ParseResultType.Success(new FileDeleteBuilder());
     }
 
-    public override ParseResultType TryParse(T commandBuilder, IEnumerator<string> enumerator)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
     {
         if (enumerator.Current == TokenName)
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(new FileDeleteBuilder(), enumerator);
-                return new ParseResultType.Success(new FileDeleteBuilder());
+                return NextSubchainParse(enumerator);
             }
         }
 
-        return NextNodeParse(commandBuilder, enumerator);
+        return NextNodeParse(enumerator);
     }
 }

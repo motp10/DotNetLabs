@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection.FileSystemConnectionCores;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection.States;
 
@@ -48,5 +49,10 @@ public class FileSystemConnector
     public bool IsConnected()
     {
         return _core.State is ActiveConnectionState;
+    }
+
+    public VIsitorData DefaultTreeListSymbols()
+    {
+        return new VIsitorData("file", "directory", ' ');
     }
 }

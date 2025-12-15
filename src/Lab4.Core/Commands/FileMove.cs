@@ -22,14 +22,30 @@ public class FileMove : ICommand
 
         string currentPath = connector.CurrentPath;
         string absolutePath = connector.AbsolutePath;
-        string resolevedSourcePath = connector.FileSystem.ResolvePath(_sourceFile, currentPath);
-        string resolevedDestinationPath = connector.FileSystem.ResolvePath(_destinationFile, currentPath);
-        if (!connector.FileSystem.IsInRoot(resolevedSourcePath, absolutePath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsInRoot(resolevedDestinationPath, absolutePath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsExist(resolevedSourcePath)) return new CommandResultType.Failure();
-        if (!connector.FileSystem.IsExist(resolevedDestinationPath)) return new CommandResultType.Failure();
+        string newSourcePath = _sourceFile;
+        string newDestinationPath = _destinationFile;
+        if (connector.FileSystem.IsAbsolutePath(_sourceFile))
+        {
+            newSourcePath = connector.FileSystem.Combine(connector.AbsolutePath, _sourceFile);
+        }
+        else
+        {
+            newSourcePath = connector.FileSystem.ResolvePath(_sourceFile, currentPath);
+        }
 
-        FileSystemResultType result = connector.FileSystem.Move(resolevedSourcePath, resolevedDestinationPath);
+        if (connector.FileSystem.IsAbsolutePath(_destinationFile))
+        {
+            newDestinationPath = connector.FileSystem.Combine(connector.AbsolutePath, _destinationFile);
+        }
+        else
+        {
+            newDestinationPath = connector.FileSystem.ResolvePath(_destinationFile, currentPath);
+        }
+
+        if (!connector.FileSystem.IsExist(newSourcePath)) return new CommandResultType.Failure();
+        if (!connector.FileSystem.IsExist(newDestinationPath)) return new CommandResultType.Failure();
+
+        FileSystemResultType result = connector.FileSystem.Move(newSourcePath, newDestinationPath);
         if (result is FileSystemResultType.Succes)
         {
             return new CommandResultType.Succes();
