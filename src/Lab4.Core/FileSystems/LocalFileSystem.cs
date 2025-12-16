@@ -110,38 +110,17 @@ public class LocalFileSystem : IFileSystem
 
         private IEnumerable<IFileSystemComponent> GetComponentsEnumerator()
         {
-            var rootDir = new DirectoryInfo(_rootPath);
-            yield return CreateComponent(rootDir);
-
-            var stack = new Stack<DirectoryInfo>();
-            stack.Push(rootDir);
-            while (stack.Count > 0)
+            var path = new DirectoryInfo(_rootPath);
+            foreach (string file in Directory.EnumerateFiles(_rootPath))
             {
-                ++Depth;
-                DirectoryInfo currentDir = stack.Pop();
-
-                foreach (FileInfo file in currentDir.GetFiles())
-                {
-                    yield return CreateComponent(file);
-                }
-
-                foreach (DirectoryInfo subDir in currentDir.GetDirectories())
-                {
-                    yield return CreateComponent(subDir);
-                    stack.Push(subDir);
-                }
+                yield return new FileFileSystemComponent(Path.GetFileName(file));
             }
-        }
 
-        private IFileSystemComponent CreateComponent(FileSystemInfo item)
-        {
-            if (item is DirectoryInfo)
+            foreach (string directory in Directory.EnumerateDirectories(_rootPath))
             {
-                return new DirectoryFileSystemComponent(item.Name, this);
-            }
-            else
-            {
-                return new FileFileSystemComponent(item.Name);
+                yield return new DirectoryFileSystemComponent(
+                    Path.GetFileName(directory),
+                    new LocalFileSystemComponentsIterator(directory));
             }
         }
     }

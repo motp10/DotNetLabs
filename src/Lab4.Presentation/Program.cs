@@ -23,7 +23,7 @@ public class Program
             com.Execute(connector);
         }
 
-        s = "tree list -kj -uu -d 1";
+        s = "tree list -kj -uu -d 2";
         enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         enumerator.MoveNext();
         r = p.Parse(enumerator);

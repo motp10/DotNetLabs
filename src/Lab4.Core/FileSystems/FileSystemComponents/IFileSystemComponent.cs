@@ -4,10 +4,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemCompone
 
 public interface IFileSystemComponent
 {
-    bool HasNextcomponent();
-
-    IFileSystemComponent GetNextComponent();
-
     string Name { get; }
 
     void Accept(IFileSystemComponentVisitor visitor);

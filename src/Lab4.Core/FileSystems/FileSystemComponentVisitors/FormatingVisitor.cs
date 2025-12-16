@@ -11,7 +11,9 @@ public class FormatingVisitor : IFileSystemComponentVisitor
 
     private readonly IWriter _writer;
 
-    public FormatingVisitor(int depth, VIsitorData data, IWriter writer)
+    private int _currDepth = 0;
+
+    public FormatingVisitor(int depth, VIsitorData data, IWriter writer, IComponentsIterator iterator)
     {
         _depth = depth;
         _data = data;
@@ -20,24 +22,25 @@ public class FormatingVisitor : IFileSystemComponentVisitor
 
     public void Visit(FileFileSystemComponent component)
     {
-        _writer.Write($"{new string(' ', _depth) + _data.FileSymbols} {component.Name}");
+        _writer.Write($"{new string(' ', _currDepth * 5) + _data.FileSymbols} {component.Name}");
     }
 
     public void Visit(DirectoryFileSystemComponent component)
     {
-        _writer.Write($"{new string(_data.Identation, component.Depth) + _data.DirectorySymbols} {component.Name}/");
-        while (component.HasNextcomponent())
+        if (_currDepth >= _depth) return;
+
+        _writer.Write($"{new string(' ', _currDepth * 5) + _data.DirectorySymbols} {component.Name}");
+
+        IFileSystemComponent? newComponent = component.GiveSubComponents();
+
+        ++_currDepth;
+
+        while (newComponent != null)
         {
-            if (component.Depth > _depth) break;
-            IFileSystemComponent currComponent = component.GetNextComponent();
-            if (currComponent is DirectoryFileSystemComponent)
-            {
-                _writer.Write($"{new string(_data.Identation, component.Depth) + _data.DirectorySymbols} {currComponent.Name}/");
-            }
-            else
-            {
-                _writer.Write($"{new string(_data.Identation, component.Depth) + _data.FileSymbols} {currComponent.Name}/");
-            }
+            newComponent.Accept(this);
+            newComponent = component.GiveSubComponents();
         }
+
+        --_currDepth;
     }
 }

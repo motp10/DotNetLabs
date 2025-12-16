@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponents;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors.VisitorsBuilders;
@@ -9,6 +10,8 @@ public class FormatingVisitorBuilder : IVisitorBuilder
     public int Depth { get; private set; }
 
     public IWriter Writer { get; private set; }
+
+    public IComponentsIterator? Iterator { get; private set; }
 
     public FormatingVisitorBuilder()
     {
@@ -37,6 +40,11 @@ public class FormatingVisitorBuilder : IVisitorBuilder
         Writer = writer;
     }
 
+    public void WithIterator(IComponentsIterator iterator)
+    {
+        Iterator = iterator;
+    }
+
     public IFileSystemComponentVisitor Build()
     {
         if (_data == null)
@@ -44,6 +52,7 @@ public class FormatingVisitorBuilder : IVisitorBuilder
             throw new Exception("Data is null");
         }
 
-        return new FormatingVisitor(Depth, _data, Writer);
+        if (Iterator == null) throw new Exception("Iterator is null");
+        return new FormatingVisitor(Depth, _data, Writer, Iterator);
     }
 }

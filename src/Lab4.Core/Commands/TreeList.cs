@@ -29,6 +29,7 @@ public class TreeList : ICommand
 
         if (!connector.FileSystem.IsExist(newPath)) return new CommandResultType.Failure();
         _builder.WithData(connector.DefaultTreeListSymbols());
+        _builder.WithIterator(connector.FileSystem.GetIterator(connector.CurrentPath));
         IFileSystemComponentVisitor visitor = _builder.Build();
         visitor.Visit(new DirectoryFileSystemComponent(newPath, connector.FileSystem.GetIterator(newPath)));
         return new CommandResultType.Succes();

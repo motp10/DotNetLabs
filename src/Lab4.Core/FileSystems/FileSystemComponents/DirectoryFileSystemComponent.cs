@@ -8,22 +8,20 @@ public class DirectoryFileSystemComponent : IFileSystemComponent
 
     private readonly IComponentsIterator _iterator;
 
-    public int Depth => _iterator.Depth;
+    public IFileSystemComponent? GiveSubComponents()
+    {
+        if (_iterator.HasNextcomponent())
+        {
+            return _iterator.GetNextComponent();
+        }
+
+        return null;
+    }
 
     public DirectoryFileSystemComponent(string name, IComponentsIterator iterator)
     {
         Name = name;
         _iterator = iterator;
-    }
-
-    public bool HasNextcomponent()
-    {
-        return _iterator.HasNextcomponent();
-    }
-
-    public IFileSystemComponent GetNextComponent()
-    {
-        return _iterator.GetNextComponent();
     }
 
     public void Accept(IFileSystemComponentVisitor visitor)
