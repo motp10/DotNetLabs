@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemCompone
 
 public class FormatingVisitor : IFileSystemComponentVisitor
 {
+    private const int _spacesCount = 5;
     private readonly int _depth;
 
     private readonly VIsitorData _data;
@@ -22,14 +23,14 @@ public class FormatingVisitor : IFileSystemComponentVisitor
 
     public void Visit(FileFileSystemComponent component)
     {
-        _writer.Write($"{new string(' ', _currDepth * 5) + _data.FileSymbols} {component.Name}");
+        _writer.Write($"{new string(' ', _currDepth * _spacesCount) + _data.FileSymbols} {component.Name}");
     }
 
     public void Visit(DirectoryFileSystemComponent component)
     {
         if (_currDepth >= _depth) return;
 
-        _writer.Write($"{new string(' ', _currDepth * 5) + _data.DirectorySymbols} {component.Name}");
+        _writer.Write($"{new string(' ', _currDepth * _spacesCount) + _data.DirectorySymbols} {component.Name}");
 
         IFileSystemComponent? newComponent = component.GiveSubComponents();
 
