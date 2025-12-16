@@ -22,7 +22,7 @@ public class DepthNode<T> : ArgumentNode<T> where T : TreeListBuilder
                 NextNodeParse(commandBuilder, enumerator);
             }
 
-            return new ParseResultType.Failure();
+            return new ParseResultType.Success(commandBuilder);
         }
 
         return NextNodeParse(commandBuilder, enumerator);

@@ -1,18 +1,39 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.SystemConnection;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.ChainsFabrics;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
+
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation;
 
 public class Program
 {
     public static void Main()
     {
-        string s = "file copy";
+        // Console.WriteLine(Directory.Exists("/home/motp10/Downloads"));
+        string s = "connect /home/motp10/Itmo -m local";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
-        int x = 0;
-        while (enumerator.MoveNext())
+        enumerator.MoveNext();
+        var f = new ParserFabric();
+        SimpleParser p = f.Make();
+        ParseResultType r = p.Parse(enumerator);
+        var connector = new FileSystemConnector();
+        if (r is ParseResultType.Success q)
         {
-            ++x;
-            Console.WriteLine(enumerator.Current);
+             ICommand com = q.Builder.Build();
+             com.Execute(connector);
         }
 
-        Console.WriteLine(x);
+        s = "tree list -d 1";
+        enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
+        enumerator.MoveNext();
+        r = p.Parse(enumerator);
+        if (r is ParseResultType.Success res)
+        {
+            ICommand com = res.Builder.Build();
+            com.Execute(connector);
+        }
+
+        Console.WriteLine();
     }
 }

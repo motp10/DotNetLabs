@@ -8,6 +8,7 @@ public class DeactiveConnectionState : IConnectionState
     {
         core.State = new ActiveConnectionState();
         core.AbsolutePath = path;
+        core.CurrentPath = path;
     }
 
     public void Disconnect(IFileSystemConnectionCore core) { }

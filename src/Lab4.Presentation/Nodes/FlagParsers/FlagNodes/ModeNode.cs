@@ -46,7 +46,7 @@ public class ModeNode<T> : ArgumentNode<T> where T : ICommandBuilder
                 NextNodeParse(commandBuilder, enumerator);
             }
 
-            return new ParseResultType.Failure();
+            return new ParseResultType.Success(commandBuilder);
         }
 
         return NextNodeParse(commandBuilder, enumerator);

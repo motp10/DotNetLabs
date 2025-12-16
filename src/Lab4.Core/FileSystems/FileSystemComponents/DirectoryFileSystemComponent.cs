@@ -8,6 +8,8 @@ public class DirectoryFileSystemComponent : IFileSystemComponent
 
     private readonly IComponentsIterator _iterator;
 
+    public int Depth => _iterator.Depth;
+
     public DirectoryFileSystemComponent(string name, IComponentsIterator iterator)
     {
         Name = name;

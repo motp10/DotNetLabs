@@ -8,12 +8,17 @@
     <Project Path="src\Lab1\Lab1.csproj" Type="Classic C#" />
     <Project Path="src\Lab2\Lab2.csproj" Type="Classic C#" />
     <Project Path="src\Lab3\Lab3.csproj" Type="Classic C#" />
-    <Project Path="src\Lab5\Lab5.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/lab-4/">
     <Project Path="src\Lab4.Core\Lab4.Core.csproj" Type="Classic C#" />
     <Project Path="src\Lab4.Presentation\Lab4.Presentation.csproj" Type="Classic C#" />
   </Folder>
+  <Folder Name="/src/lab-5/" />
+  <Folder Name="/src/lab-5/Application/" />
+  <Folder Name="/src/lab-5/DomainModel/" />
+  <Folder Name="/src/lab-5/DomainService/" />
+  <Folder Name="/src/lab-5/Infrastructure/" />
+  <Folder Name="/src/lab-5/Presentation/" />
   <Folder Name="/tests/">
     <Project Path="tests\Lab1.Tests\Lab1.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\Lab2.Tests\Lab2.Tests.csproj" Type="Classic C#" />

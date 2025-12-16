@@ -8,19 +8,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands;
 
 public class TreeList : ICommand
 {
-    private readonly string _path;
-
     private readonly IVisitorBuilder _builder;
 
-    public TreeList(string fileName, IVisitorBuilder builder)
+    public TreeList(IVisitorBuilder builder)
     {
-        _path = fileName;
         _builder = builder;
     }
 
     public CommandResultType Execute(FileSystemConnector connector)
     {
-        string newPath = _path;
+        string newPath = connector.CurrentPath;
         if (connector.FileSystem.IsAbsolutePath(newPath))
         {
             newPath = connector.FileSystem.Combine(connector.AbsolutePath, newPath);

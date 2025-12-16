@@ -4,17 +4,9 @@ using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVi
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
 
-public class TreeListBuilder : IPathBuilder, IWithDepthBuilder
+public class TreeListBuilder : ICommandBuilder, IWithDepthBuilder
 {
     private readonly FormatingVisitorBuilder _builder = new FormatingVisitorBuilder();
-
-    public string Path { get; private set; } = string.Empty;
-
-    public ICommandBuilder WithPath(string path)
-    {
-        Path = path;
-        return this;
-    }
 
     public ICommandBuilder WithDepth(int depth)
     {
@@ -29,6 +21,6 @@ public class TreeListBuilder : IPathBuilder, IWithDepthBuilder
 
     public ICommand Build()
     {
-        return new TreeList(Path, _builder);
+        return new TreeList(_builder);
     }
 }

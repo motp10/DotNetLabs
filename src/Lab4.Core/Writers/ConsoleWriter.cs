@@ -4,6 +4,6 @@ public class ConsoleWriter : IWriter
 {
     public void Write(string text)
     {
-        Console.Write(text);
+        Console.WriteLine(text);
     }
 }

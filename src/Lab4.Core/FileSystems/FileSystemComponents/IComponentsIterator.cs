@@ -4,5 +4,7 @@ public interface IComponentsIterator
 {
     bool HasNextcomponent();
 
+    int Depth { get; }
+
     IFileSystemComponent GetNextComponent();
 }

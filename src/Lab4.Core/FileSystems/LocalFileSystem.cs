@@ -39,7 +39,7 @@ public class LocalFileSystem : IFileSystem
 
     public bool IsExist(string fileName)
     {
-        return File.Exists(fileName);
+        return Directory.Exists(fileName);
     }
 
     public string ResolvePath(string path, string currentPath)
@@ -90,6 +90,8 @@ public class LocalFileSystem : IFileSystem
         private readonly string _rootPath;
         private readonly IEnumerator<IFileSystemComponent> _enumerator;
 
+        public int Depth { get; private set; } = 0;
+
         public LocalFileSystemComponentsIterator(string rootPath)
         {
             _rootPath = rootPath;
@@ -113,9 +115,9 @@ public class LocalFileSystem : IFileSystem
 
             var stack = new Stack<DirectoryInfo>();
             stack.Push(rootDir);
-
             while (stack.Count > 0)
             {
+                ++Depth;
                 DirectoryInfo currentDir = stack.Pop();
 
                 foreach (FileInfo file in currentDir.GetFiles())

@@ -18,9 +18,9 @@ public class Connect : ICommand
 
     public CommandResultType Execute(FileSystemConnector connector)
     {
-        if (!connector.IsConnected()) return new CommandResultType.Failure();
+        if (connector.IsConnected()) return new CommandResultType.Failure();
 
-        if (!connector.FileSystem.IsAbsolutePath(_absolutePath)) return new CommandResultType.Failure();
+        if (!_fileSystem.IsAbsolutePath(_absolutePath)) return new CommandResultType.Failure();
 
         connector.Connect(_absolutePath, _fileSystem);
         return new CommandResultType.Succes();
