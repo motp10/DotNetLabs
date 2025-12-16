@@ -25,18 +25,19 @@ public class FIleShowNode : CommandNode
         {
             if (enumerator.MoveNext())
             {
-                var result = new FileShowBuilder();
-                result.WithWriter(new ConsoleWriter());
+                var resultBuilder = new FileShowBuilder();
+                resultBuilder.WithWriter(new ConsoleWriter());
 
-                NextArgumentParse(result, enumerator);
-
+                NextArgumentParse(resultBuilder, enumerator);
+                ParseResultType resultType = new ParseResultType.Success(resultBuilder);
                 while (true)
                 {
-                    NextFlagParse(result, enumerator);
+                    resultType = NextFlagParse(resultBuilder, enumerator);
+                    if (resultType is ParseResultType.Failure) return resultType;
                     if (!enumerator.MoveNext()) break;
                 }
 
-                return new ParseResultType.Success(result);
+                return new ParseResultType.Success(resultBuilder);
             }
         }
 

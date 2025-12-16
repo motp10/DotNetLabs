@@ -40,8 +40,6 @@ public class ModeNode<T> : FlagNode<T> where T : ICommandBuilder
                 return new ParseResultType.Failure();
             }
 
-            NextNodeParse(commandBuilder, enumerator);
-
             return new ParseResultType.Success(commandBuilder);
         }
 

@@ -132,4 +132,21 @@ public class FileSystemTests
             Assert.IsType<TreeListBuilder>(b);
         }
     }
+
+    [Fact]
+    public void BadFlagTest()
+    {
+        // Arrange
+        string s = "tree list -d 2 -p";
+        var f = new ParserFabric();
+        IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
+
+        // Act
+        enumerator.MoveNext();
+        SimpleParser p = f.Make();
+        ParseResultType r = p.Parse(enumerator);
+
+        // Assert
+        Assert.IsType<ParseResultType.Failure>(r);
+    }
 }

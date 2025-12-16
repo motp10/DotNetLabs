@@ -43,16 +43,18 @@ public class ConnectNode : CommandNode
         {
             if (enumerator.MoveNext())
             {
-                var result = new ConnectBuilder();
-                result.WithFileSystem(new LocalFileSystem());
-                NextArgumentParse(result, enumerator);
+                var resultBuilder = new ConnectBuilder();
+                resultBuilder.WithFileSystem(new LocalFileSystem());
+                NextArgumentParse(resultBuilder, enumerator);
+                ParseResultType resultType = new ParseResultType.Success(resultBuilder);
                 while (true)
                 {
-                    NextFlagParse(result, enumerator);
+                    resultType = NextFlagParse(resultBuilder, enumerator);
+                    if (resultType is ParseResultType.Failure) return resultType;
                     if (!enumerator.MoveNext()) break;
                 }
 
-                return new ParseResultType.Success(result);
+                return new ParseResultType.Success(resultBuilder);
             }
         }
 

@@ -16,11 +16,6 @@ public class DepthNode<T> : FlagNode<T> where T : TreeListBuilder
                 commandBuilder.WithDepth(int.Parse(enumerator.Current));
             }
 
-            if (enumerator.MoveNext())
-            {
-                NextNodeParse(commandBuilder, enumerator);
-            }
-
             return new ParseResultType.Success(commandBuilder);
         }
 

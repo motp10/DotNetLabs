@@ -24,12 +24,15 @@ public class TreeListNode : CommandNode
             if (enumerator.MoveNext())
             {
                 var result = new TreeListBuilder();
+                ParseResultType resultType = new ParseResultType.Success(result);
                 while (true)
                 {
-                    NextFlagParse(result, enumerator);
+                    resultType = NextFlagParse(result, enumerator);
+                    if (resultType is ParseResultType.Failure) return resultType;
                     if (!enumerator.MoveNext()) break;
                 }
 
+                if (resultType is ParseResultType.Failure) return resultType;
                 return new ParseResultType.Success(result);
             }
         }
