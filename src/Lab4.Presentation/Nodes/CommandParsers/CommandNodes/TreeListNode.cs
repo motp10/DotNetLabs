@@ -1,30 +1,20 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers.FlagNodes;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
 public class TreeListNode : CommandNode
 {
-    public string TokenName => "list";
+    private string TokenName => "list";
 
-    public DepthNode<TreeListBuilder>? SubChain { get; set; }
+    private FlagNode<TreeListBuilder>? _flagSubChain;
 
-    public CommandNode AddSubchain(DepthNode<TreeListBuilder>? node)
+    public CommandNode AddFlag(FlagNode<TreeListBuilder>? node)
     {
-        SubChain = node;
+        _flagSubChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new TreeListBuilder(), tokens);
-        }
-
-        return new ParseResultType.Success(new TreeListBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -33,11 +23,27 @@ public class TreeListNode : CommandNode
         {
             if (enumerator.MoveNext())
             {
-                if (SubChain != null) return NextSubchainParse(enumerator);
-                return new ParseResultType.Success(new TreeListBuilder());
+                var result = new TreeListBuilder();
+                while (true)
+                {
+                    NextFlagParse(result, enumerator);
+                    if (!enumerator.MoveNext()) break;
+                }
+
+                return new ParseResultType.Success(result);
             }
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextFlagParse(TreeListBuilder commandBuilder, IEnumerator<string> tokens)
+    {
+        if (_flagSubChain != null)
+        {
+            return _flagSubChain.TryParse(commandBuilder, tokens);
+        }
+
+        return new ParseResultType.Success(commandBuilder);
     }
 }

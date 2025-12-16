@@ -5,25 +5,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class DisconnectNode : CommandNode
 {
-    public string TokenName => "disconnect";
+    private string TokenName => "disconnect";
 
-    public IParseNode<DisconnectBuilder>? SubChain { get; set; }
+    private IParseNode<DisconnectBuilder>? _subChain;
 
-    public CommandNode AddSubchain(IParseNode<DisconnectBuilder> node)
+    public ICommandNode AddSubchain(IParseNode<DisconnectBuilder> node)
     {
-        SubChain = node;
+        _subChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> enumerator)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new DisconnectBuilder(), enumerator);
-        }
-
-        return new ParseResultType.Success(new DisconnectBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -37,5 +27,15 @@ public class DisconnectNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> enumerator)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(new DisconnectBuilder(), enumerator);
+        }
+
+        return new ParseResultType.Success(new DisconnectBuilder());
     }
 }

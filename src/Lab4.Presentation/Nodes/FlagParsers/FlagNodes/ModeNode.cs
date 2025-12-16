@@ -1,17 +1,16 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagValueParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers.FlagNodes;
 
-public class ModeNode<T> : ArgumentNode<T> where T : ICommandBuilder
+public class ModeNode<T> : FlagNode<T> where T : ICommandBuilder
 {
     public string TokenName => "-m";
 
     public FlagValueNode<T>? SubChain { get; set; }
 
-    public ArgumentNode<T> AddSubchain(FlagValueNode<T>? node)
+    public ModeNode<T> AddSubchain(FlagValueNode<T>? node)
     {
         SubChain = node;
 
@@ -41,10 +40,7 @@ public class ModeNode<T> : ArgumentNode<T> where T : ICommandBuilder
                 return new ParseResultType.Failure();
             }
 
-            while (enumerator.MoveNext())
-            {
-                NextNodeParse(commandBuilder, enumerator);
-            }
+            NextNodeParse(commandBuilder, enumerator);
 
             return new ParseResultType.Success(commandBuilder);
         }

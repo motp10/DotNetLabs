@@ -4,25 +4,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class FileNode : CommandNode
 {
-    public string TokenName => "file";
+    private string TokenName => "file";
 
-    public CommandNode? SubChain { get; set; }
+    private CommandNode? _subChain;
 
     public CommandNode AddSubchain(CommandNode? node)
     {
-        SubChain = node;
+        _subChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(tokens);
-        }
-
-        return new ParseResultType.Failure();
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -38,5 +28,15 @@ public class FileNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(tokens);
+        }
+
+        return new ParseResultType.Failure();
     }
 }

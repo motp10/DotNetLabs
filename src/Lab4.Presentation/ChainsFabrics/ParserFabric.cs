@@ -16,8 +16,8 @@ public class ParserFabric
         var pathNode = new PathNode<ConnectBuilder>();
         var modeNode = new ModeNode<ConnectBuilder>();
         modeNode.AddSubchain(new ConnectModeNode<ConnectBuilder>());
-        pathNode.AddNextNode(modeNode);
-        connectNode.AddSubchain(pathNode);
+        connectNode.AddArgument(pathNode);
+        connectNode.AddFlag(modeNode);
 
         var disconnectNode = new DisconnectNode();
 
@@ -46,8 +46,8 @@ public class ParserFabric
         var showPathNode = new PathNode<FileShowBuilder>();
         var fileShowModeNode = new ModeNode<FileShowBuilder>();
         fileShowModeNode.AddSubchain(new FileShowMode<FileShowBuilder>());
-        showPathNode.AddNextNode(fileShowModeNode);
-        fileShowNode.AddSubchain(showPathNode);
+        fileShowNode.AddArgument(showPathNode);
+        fileShowNode.AddFlag(fileShowModeNode);
 
         fileCopyNode.AddNextNode(fileMoveNode).AddNextNode(fileDeleteNode).AddNextNode(fileRenameNode).AddNextNode(fileShowNode);
         fileNode.AddSubchain(fileCopyNode);
@@ -58,7 +58,7 @@ public class ParserFabric
 
         var treeList = new TreeListNode();
         var treeDepthFlag = new DepthNode<TreeListBuilder>();
-        treeList.AddSubchain(treeDepthFlag);
+        treeList.AddFlag(treeDepthFlag);
         treeGoTo.AddNextNode(treeList);
 
         treeNode.AddSubchain(treeGoTo);

@@ -1,29 +1,39 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
-using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers.ArgumentNodes;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers;
+using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.CommandNodes;
 
 public class ConnectNode : CommandNode
 {
-    public string TokenName => "connect";
+    private static string TokenName => "connect";
 
-    public PathNode<ConnectBuilder>? SubChain { get; set; }
+    private IArgumentNode<ConnectBuilder>? _argumentSubChain;
 
-    public CommandNode AddSubchain(PathNode<ConnectBuilder>? node)
+    public CommandNode AddArgument(IArgumentNode<ConnectBuilder>? node)
     {
-        SubChain = node;
+        _argumentSubChain = node;
         return this;
     }
 
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    private ParseResultType NextArgumentParse(ConnectBuilder commandBuilder, IEnumerator<string> tokens)
     {
-        if (SubChain != null)
+        if (_argumentSubChain != null)
         {
-            return SubChain.TryParse(new ConnectBuilder(), tokens);
+            return _argumentSubChain.TryParse(commandBuilder, tokens);
         }
 
         return new ParseResultType.Success(new ConnectBuilder());
+    }
+
+    private FlagNode<ConnectBuilder>? _flagSubChain;
+
+    public CommandNode AddFlag(FlagNode<ConnectBuilder>? node)
+    {
+        _flagSubChain = node;
+
+        return this;
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -32,10 +42,28 @@ public class ConnectNode : CommandNode
         {
             if (enumerator.MoveNext())
             {
-                return NextSubchainParse(enumerator);
+                var result = new ConnectBuilder();
+                NextArgumentParse(result, enumerator);
+                while (true)
+                {
+                    NextFlagParse(result, enumerator);
+                    if (!enumerator.MoveNext()) break;
+                }
+
+                return new ParseResultType.Success(result);
             }
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextFlagParse(ConnectBuilder commandBuilder, IEnumerator<string> tokens)
+    {
+        if (_flagSubChain != null)
+        {
+            return _flagSubChain.TryParse(commandBuilder, tokens);
+        }
+
+        return new ParseResultType.Success(new TreeListBuilder());
     }
 }

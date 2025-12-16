@@ -7,25 +7,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class TreeGoToNode : CommandNode
 {
-    public string TokenName => "goto";
+    private string TokenName => "goto";
 
-    public PathNode<IPathBuilder>? SubChain { get; set; }
+    private PathNode<IPathBuilder>? _subChain;
 
     public CommandNode AddSubchain(PathNode<IPathBuilder>? node)
     {
-        SubChain = node;
+        _subChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new FileShowBuilder(), tokens);
-        }
-
-        return new ParseResultType.Success(new FileShowBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -39,5 +29,15 @@ public class TreeGoToNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(new FileShowBuilder(), tokens);
+        }
+
+        return new ParseResultType.Success(new FileShowBuilder());
     }
 }

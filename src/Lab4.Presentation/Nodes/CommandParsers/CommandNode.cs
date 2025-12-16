@@ -2,11 +2,11 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers;
 
-public abstract class CommandNode
+public abstract class CommandNode : ICommandNode
 {
-    public CommandNode? NextNode { get; set; }
+    public ICommandNode? NextNode { get; set; }
 
-    public CommandNode AddNextNode(CommandNode node)
+    public ICommandNode AddNextNode(ICommandNode node)
     {
         if (NextNode == null)
         {

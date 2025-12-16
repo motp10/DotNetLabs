@@ -6,25 +6,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class FileDeleteNode : CommandNode
 {
-    public string TokenName => "delete";
+    private string TokenName => "delete";
 
-    public PathNode<FileDeleteBuilder>? SubChain { get; set; }
+    private PathNode<FileDeleteBuilder>? _subChain;
 
     public CommandNode AddSubchain(PathNode<FileDeleteBuilder>? node)
     {
-        SubChain = node;
+        _subChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new FileDeleteBuilder(), tokens);
-        }
-
-        return new ParseResultType.Success(new FileDeleteBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -38,5 +28,15 @@ public class FileDeleteNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(new FileDeleteBuilder(), tokens);
+        }
+
+        return new ParseResultType.Success(new FileDeleteBuilder());
     }
 }

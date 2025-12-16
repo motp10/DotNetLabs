@@ -3,11 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagValueParsers;
 
-public abstract class FlagValueNode<T> where T : ICommandBuilder
+public abstract class FlagValueNode<T> : IFlagValueNode<T> where T : ICommandBuilder
 {
-    public FlagValueNode<T>? NextNode { get; set; }
+    public IFlagValueNode<T>? NextNode { get; private set; }
 
-    public FlagValueNode<T> AddNextNode(FlagValueNode<T> node)
+    public IFlagValueNode<T> AddNextNode(IFlagValueNode<T> node)
     {
         if (NextNode == null)
         {

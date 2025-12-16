@@ -6,24 +6,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class FileMoveNode : CommandNode
 {
-    public string TokenName => "move";
+    private string TokenName => "move";
 
-    public SourcePathNode<FileMoveBuilder>? SubChain { get; set; }
+    private SourcePathNode<FileMoveBuilder>? _subChain;
 
     public CommandNode AddSubchain(SourcePathNode<FileMoveBuilder>? node)
     {
-        SubChain = node;
+        _subChain = node;
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new FileMoveBuilder(), tokens);
-        }
-
-        return new ParseResultType.Success(new FileMoveBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -37,5 +27,15 @@ public class FileMoveNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(new FileMoveBuilder(), tokens);
+        }
+
+        return new ParseResultType.Success(new FileMoveBuilder());
     }
 }

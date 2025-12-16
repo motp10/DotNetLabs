@@ -3,11 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers;
 
-public abstract class ArgumentNode<T> where T : ICommandBuilder
+public abstract class ArgumentNode<T> : IArgumentNode<T> where T : ICommandBuilder
 {
-    public ArgumentNode<T>? NextNode { get; set; }
+    public IArgumentNode<T>? NextNode { get; private set; }
 
-    public ArgumentNode<T> AddNextNode(ArgumentNode<T> node)
+    public IArgumentNode<T> AddNextNode(IArgumentNode<T> node)
     {
         if (NextNode == null)
         {
@@ -30,6 +30,6 @@ public abstract class ArgumentNode<T> where T : ICommandBuilder
             return NextNode.TryParse(builder, enumerator);
         }
 
-        return new ParseResultType.Failure();
+        return new ParseResultType.Success(builder);
     }
 }

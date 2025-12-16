@@ -6,25 +6,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class FileRenameNode : CommandNode
 {
-    public string TokenName => "rename";
+    private string TokenName => "rename";
 
-    public PathNode<FileRenameBuilder>? SubChain { get; set; }
+    private PathNode<FileRenameBuilder>? _subChain;
 
     public CommandNode AddSubchain(PathNode<FileRenameBuilder>? node)
     {
-        SubChain = node;
+        _subChain = node;
 
         return this;
-    }
-
-    public ParseResultType NextSubchainParse(IEnumerator<string> tokens)
-    {
-        if (SubChain != null)
-        {
-            return SubChain.TryParse(new FileRenameBuilder(), tokens);
-        }
-
-        return new ParseResultType.Success(new FileRenameBuilder());
     }
 
     public override ParseResultType TryParse(IEnumerator<string> enumerator)
@@ -38,5 +28,15 @@ public class FileRenameNode : CommandNode
         }
 
         return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextSubchainParse(IEnumerator<string> tokens)
+    {
+        if (_subChain != null)
+        {
+            return _subChain.TryParse(new FileRenameBuilder(), tokens);
+        }
+
+        return new ParseResultType.Success(new FileRenameBuilder());
     }
 }

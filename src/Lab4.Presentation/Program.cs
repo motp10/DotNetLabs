@@ -10,7 +10,6 @@ public class Program
 {
     public static void Main()
     {
-        // Console.WriteLine(Directory.Exists("/home/motp10/Downloads"));
         string s = "connect /home/motp10/Itmo -m local";
         IEnumerator<string> enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         enumerator.MoveNext();
@@ -20,11 +19,11 @@ public class Program
         var connector = new FileSystemConnector();
         if (r is ParseResultType.Success q)
         {
-             ICommand com = q.Builder.Build();
-             com.Execute(connector);
+            ICommand com = q.Builder.Build();
+            com.Execute(connector);
         }
 
-        s = "tree list -d 1";
+        s = "tree list -kj -uu -d 1";
         enumerator = s.Split(' ').AsEnumerable().GetEnumerator();
         enumerator.MoveNext();
         r = p.Parse(enumerator);
