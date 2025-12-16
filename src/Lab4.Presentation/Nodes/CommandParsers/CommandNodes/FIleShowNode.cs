@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
@@ -7,26 +8,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.CommandParsers.
 
 public class FIleShowNode : CommandNode
 {
-    public override ParseResultType TryParse(IEnumerator<string> enumerator)
-    {
-        if (enumerator.Current == TokenName)
-        {
-            if (enumerator.MoveNext())
-            {
-                ParseResultType reult = NextArgumentParse(enumerator);
-                while (true)
-                {
-                    NextFlagParse(enumerator);
-                    if (!enumerator.MoveNext()) break;
-                }
-
-                return reult;
-            }
-        }
-
-        return NextNodeParse(enumerator);
-    }
-
     private string TokenName => "show";
 
     private ArgumentNode<FileShowBuilder>? _argumentSubChain;
@@ -38,14 +19,38 @@ public class FIleShowNode : CommandNode
         return this;
     }
 
-    private ParseResultType NextArgumentParse(IEnumerator<string> tokens)
+    public override ParseResultType TryParse(IEnumerator<string> enumerator)
+    {
+        if (enumerator.Current == TokenName)
+        {
+            if (enumerator.MoveNext())
+            {
+                var result = new FileShowBuilder();
+                result.WithWriter(new ConsoleWriter());
+
+                NextArgumentParse(result, enumerator);
+
+                while (true)
+                {
+                    NextFlagParse(result, enumerator);
+                    if (!enumerator.MoveNext()) break;
+                }
+
+                return new ParseResultType.Success(result);
+            }
+        }
+
+        return NextNodeParse(enumerator);
+    }
+
+    private ParseResultType NextArgumentParse(FileShowBuilder commandBuilder, IEnumerator<string> tokens)
     {
         if (_argumentSubChain != null)
         {
-            return _argumentSubChain.TryParse(new FileShowBuilder(), tokens);
+            return _argumentSubChain.TryParse(commandBuilder, tokens);
         }
 
-        return new ParseResultType.Success(new FileShowBuilder());
+        return new ParseResultType.Success(commandBuilder);
     }
 
     private FlagNode<FileShowBuilder>? _flagSubChain;
@@ -57,13 +62,13 @@ public class FIleShowNode : CommandNode
         return this;
     }
 
-    private ParseResultType NextFlagParse(IEnumerator<string> tokens)
+    private ParseResultType NextFlagParse(FileShowBuilder commandBuilder, IEnumerator<string> tokens)
     {
         if (_flagSubChain != null)
         {
-            return _flagSubChain.TryParse(new FileShowBuilder(), tokens);
+            return _flagSubChain.TryParse(commandBuilder, tokens);
         }
 
-        return new ParseResultType.Success(new TreeListBuilder());
+        return new ParseResultType.Success(commandBuilder);
     }
 }

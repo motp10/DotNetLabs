@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 
@@ -21,10 +22,9 @@ public class ConnectBuilder : IPathBuilder, IWithFileSystemBuilder
         return this;
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        if (string.IsNullOrEmpty(AbsolutePath)) throw new Exception("Absolute path not set");
-        if (FileSystem == null) throw new Exception("FileSystem not set");
-        return new Connect(AbsolutePath, FileSystem);
+        if (string.IsNullOrEmpty(AbsolutePath) || (FileSystem == null)) return new BuildResultType.Failure();
+        return new BuildResultType.Success(new Connect(AbsolutePath, FileSystem));
     }
 }

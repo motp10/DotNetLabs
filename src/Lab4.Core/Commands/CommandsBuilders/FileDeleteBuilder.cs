@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
@@ -12,9 +13,9 @@ public class FileDeleteBuilder : ICommandBuilder, IPathBuilder
         return this;
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        if (string.IsNullOrEmpty(AbsolutePath)) throw new Exception("Source and Destination are required");
-        return new FileDelete(AbsolutePath);
+        if (string.IsNullOrEmpty(AbsolutePath)) return new BuildResultType.Failure();
+        return new BuildResultType.Success(new FileDelete(AbsolutePath));
     }
 }

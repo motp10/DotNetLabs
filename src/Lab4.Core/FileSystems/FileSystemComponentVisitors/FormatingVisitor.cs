@@ -23,12 +23,14 @@ public class FormatingVisitor : IFileSystemComponentVisitor
 
     public void Visit(FileFileSystemComponent component)
     {
+        if (_currDepth > _depth) return;
+
         _writer.Write($"{new string(' ', _currDepth * _spacesCount) + _data.FileSymbols} {component.Name}");
     }
 
     public void Visit(DirectoryFileSystemComponent component)
     {
-        if (_currDepth >= _depth) return;
+        if (_currDepth > _depth) return;
 
         _writer.Write($"{new string(' ', _currDepth * _spacesCount) + _data.DirectorySymbols} {component.Name}");
 

@@ -110,7 +110,6 @@ public class LocalFileSystem : IFileSystem
 
         private IEnumerable<IFileSystemComponent> GetComponentsEnumerator()
         {
-            var path = new DirectoryInfo(_rootPath);
             foreach (string file in Directory.EnumerateFiles(_rootPath))
             {
                 yield return new FileFileSystemComponent(Path.GetFileName(file));

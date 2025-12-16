@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ArgumentParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.FlagParsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
@@ -43,6 +44,7 @@ public class ConnectNode : CommandNode
             if (enumerator.MoveNext())
             {
                 var result = new ConnectBuilder();
+                result.WithFileSystem(new LocalFileSystem());
                 NextArgumentParse(result, enumerator);
                 while (true)
                 {

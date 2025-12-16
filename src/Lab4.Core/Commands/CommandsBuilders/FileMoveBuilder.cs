@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
@@ -20,9 +21,9 @@ public class FileMoveBuilder : ISourcePathBuilder, IDestinationPathBuilder
         return this;
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        if (string.IsNullOrEmpty(SourceFile) || string.IsNullOrEmpty(DestinationFile)) throw new Exception("Source and Destination are required");
-        return new FileMove(SourceFile, DestinationFile);
+        if (string.IsNullOrEmpty(SourceFile) || string.IsNullOrEmpty(DestinationFile)) return new BuildResultType.Failure();
+        return new BuildResultType.Success(new FileMove(SourceFile, DestinationFile));
     }
 }

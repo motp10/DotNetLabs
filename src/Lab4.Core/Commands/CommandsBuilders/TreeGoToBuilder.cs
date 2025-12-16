@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
@@ -12,9 +13,9 @@ public class TreeGoToBuilder : IPathBuilder
         return this;
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        if (string.IsNullOrEmpty(Path)) throw new Exception("Source and Destination are required");
-        return new TreeGoTo(Path);
+        if (string.IsNullOrEmpty(Path)) return new BuildResultType.Failure();
+        return new BuildResultType.Success(new TreeGoTo(Path));
     }
 }

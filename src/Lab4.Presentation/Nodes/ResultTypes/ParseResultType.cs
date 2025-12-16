@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders;
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Presentation.Nodes.ResultTypes;
 

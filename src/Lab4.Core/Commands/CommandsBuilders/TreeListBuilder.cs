@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.FileSystems.FileSystemComponentVisitors.VisitorsBuilders;
@@ -19,8 +20,8 @@ public class TreeListBuilder : ICommandBuilder, IWithDepthBuilder
         _builder.WithData(data);
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        return new TreeList(_builder);
+        return new BuildResultType.Success(new TreeList(_builder));
     }
 }

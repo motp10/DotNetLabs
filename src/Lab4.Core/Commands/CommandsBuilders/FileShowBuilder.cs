@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.BuilderResultType;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Commands.CommandsBuilders.PrimaryBuilders;
 using Itmo.ObjectOrientedProgramming.Lab4.Core.Writers;
 
@@ -20,13 +21,10 @@ public class FileShowBuilder : IPathBuilder
         _writer = writer;
     }
 
-    public ICommand Build()
+    public BuildResultType Build()
     {
-        if (_writer == null)
-        {
-            throw new NullReferenceException("Writer is null");
-        }
+        if (_writer == null) return new BuildResultType.Failure();
 
-        return new FileShow(Path, _writer);
+        return new BuildResultType.Success(new FileShow(Path, _writer));
     }
 }
