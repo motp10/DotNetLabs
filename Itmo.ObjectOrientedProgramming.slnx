@@ -8,7 +8,6 @@
     <Project Path="src\Lab1\Lab1.csproj" Type="Classic C#" />
     <Project Path="src\Lab2\Lab2.csproj" Type="Classic C#" />
     <Project Path="src\Lab3\Lab3.csproj" Type="Classic C#" />
-    <Project Path="src\Lab5\Lab5.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/lab-4/">
     <Project Path="src\Lab4.Core\Lab4.Core.csproj" Type="Classic C#" />
