@@ -15,4 +15,16 @@
         <PackageReference Include="xunit.runner.visualstudio"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Application.Abstraction\Application.Abstraction.csproj" />
+      <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Application\Application.csproj" />
+      <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Models\Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="NSubstitute">
+        <HintPath>..\..\..\..\.nuget\packages\nsubstitute\5.3.0\lib\net6.0\NSubstitute.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
