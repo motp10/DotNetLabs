@@ -20,6 +20,7 @@
     <Project Path="..\..\Itmo\motp10\src\Application.Abstraction\Application.Abstraction.csproj" Type="Classic C#" />
     <Project Path="..\..\Itmo\motp10\src\Application.Contracts\Application.Contracts.csproj" Type="Classic C#" />
     <Project Path="..\..\Itmo\motp10\src\Application\Application.csproj" Type="Classic C#" />
+    <Project Path="src\Labwork5\Application\Application.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/Lab5/Domain/">
     <Project Path="..\..\Itmo\motp10\src\Models\Models.csproj" Type="Classic C#" />
