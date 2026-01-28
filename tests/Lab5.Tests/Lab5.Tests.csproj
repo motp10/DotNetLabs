@@ -17,8 +17,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Application.Abstraction\Application.Abstraction.csproj" />
+      <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Application.Contracts\Application.Contracts.csproj" />
       <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Application\Application.csproj" />
       <ProjectReference Include="..\..\..\..\Itmo\motp10\src\Models\Models.csproj" />
+      <ProjectReference Include="..\..\src\Labwork5\Application\Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

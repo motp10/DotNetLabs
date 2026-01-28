@@ -1,6 +1,5 @@
 using Application.Contracts.ServicesInterfaces;
 using Application.Servises;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
