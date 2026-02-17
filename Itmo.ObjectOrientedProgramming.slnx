@@ -13,12 +13,24 @@
     <Project Path="src\Lab4.Core\Lab4.Core.csproj" Type="Classic C#" />
     <Project Path="src\Lab4.Presentation\Lab4.Presentation.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/src/lab-5/" />
-  <Folder Name="/src/lab-5/Application/" />
-  <Folder Name="/src/lab-5/DomainModel/" />
-  <Folder Name="/src/lab-5/DomainService/" />
-  <Folder Name="/src/lab-5/Infrastructure/" />
-  <Folder Name="/src/lab-5/Presentation/" />
+  <Folder Name="/src/Lab5/">
+    <Project Path="..\..\Itmo\motp10\src\Labwork5.1\Labwork5.1.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/Lab5/Application/">
+    <Project Path="..\..\Itmo\motp10\src\Application.Abstraction\Application.Abstraction.csproj" Type="Classic C#" />
+    <Project Path="..\..\Itmo\motp10\src\Application.Contracts\Application.Contracts.csproj" Type="Classic C#" />
+    <Project Path="..\..\Itmo\motp10\src\Application\Application.csproj" Type="Classic C#" />
+    <Project Path="src\Labwork5\Application\Application.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/Lab5/Domain/">
+    <Project Path="..\..\Itmo\motp10\src\Models\Models.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/Lab5/Infrastracture/">
+    <Project Path="..\..\Itmo\motp10\src\Infrastracture.Persistence\Infrastracture.Persistence.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/src/Lab5/Presentation/">
+    <Project Path="..\..\Itmo\motp10\src\PresentationHttp\PresentationHttp.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\Lab1.Tests\Lab1.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\Lab2.Tests\Lab2.Tests.csproj" Type="Classic C#" />
