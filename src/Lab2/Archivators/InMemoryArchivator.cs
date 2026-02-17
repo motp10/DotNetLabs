@@ -4,7 +4,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Archivators;
 
 public class InMemoryArchivator : IArchivator
 {
-    public void WriteMessage(Message msg)
+    private readonly List<Message> _messages;
+
+    public InMemoryArchivator()
     {
+        _messages = new List<Message>();
+    }
+
+    public void WriteMessage(Message message)
+    {
+        _messages.Add(message);
     }
 }

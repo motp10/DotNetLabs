@@ -5,9 +5,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Destinations;
 
 public class UserDestination : IDestination
 {
-    private readonly User _user;
+    private readonly IUser _user;
 
-    public UserDestination(User user)
+    public UserDestination(IUser user)
     {
         _user = user;
     }

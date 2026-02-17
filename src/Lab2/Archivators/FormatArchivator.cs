@@ -1,20 +1,21 @@
-using Itmo.ObjectOrientedProgramming.Lab2.Formaters;
+using Itmo.ObjectOrientedProgramming.Lab2.Formaters.FormatersDecorators;
+using Itmo.ObjectOrientedProgramming.Lab2.Formaters.Writers;
 using Itmo.ObjectOrientedProgramming.Lab2.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Archivators;
 
 public class FormatArchivator : IArchivator
 {
-    private readonly IFormater _formater;
+    private readonly Formater _formater;
 
-    public FormatArchivator(IFormater formater)
+    public FormatArchivator(IWriter writer)
     {
-        _formater = formater;
+        _formater = new Formater(writer);
     }
 
-    public void WriteMessage(Message msg)
+    public void WriteMessage(Message message)
     {
-        _formater.AddHead(msg);
-        _formater.AddBody(msg);
+        _formater.WriteHead(message.Head);
+        _formater.WriteBody(message.Body);
     }
 }

@@ -1,22 +1,21 @@
 using Itmo.ObjectOrientedProgramming.Lab2.Messages;
-using Itmo.ObjectOrientedProgramming.Lab2.Users;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Destinations;
 
 public class DestinationGroup : IDestination
 {
-    private readonly IReadOnlyCollection<User> _usersGroup;
+    private readonly IReadOnlyCollection<IDestination> _usersGroup;
 
-    public DestinationGroup(IReadOnlyCollection<User> usersGroup)
+    public DestinationGroup(IReadOnlyCollection<IDestination> usersGroup)
     {
         _usersGroup = usersGroup;
     }
 
     public void Recieve(Message message)
     {
-        foreach (User user in _usersGroup)
+        foreach (IDestination user in _usersGroup)
         {
-            user.ReceiveMessage(message);
+            user.Recieve(message);
         }
     }
 }

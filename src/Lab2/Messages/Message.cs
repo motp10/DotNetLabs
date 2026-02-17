@@ -1,19 +1,17 @@
-using Itmo.ObjectOrientedProgramming.Lab2.Messages.ValueObjects;
-
 namespace Itmo.ObjectOrientedProgramming.Lab2.Messages;
 
 public class Message
 {
-    public Head Head { get; }
+    public string Head { get; }
 
-    public Body Body { get; }
+    public string Body { get; }
 
-    public MesageImportanceLevel ImportanceLevel { get; }
+    public MessageImportanceLevel ImportanceLevel { get; }
 
-    public Message(string title, string body, MesageImportanceLevel importance)
+    public Message(string head, string body, MessageImportanceLevel importance)
     {
-        Head = new Head(title);
-        Body = new Body(body);
+        Head = head;
+        Body = body;
         ImportanceLevel = importance;
     }
 }

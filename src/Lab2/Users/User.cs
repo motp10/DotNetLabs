@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Users;
 
-public class User
+public class User : IUser
 {
     private readonly Dictionary<Message, bool> _messagesDict;
 
@@ -11,24 +11,34 @@ public class User
         _messagesDict = new Dictionary<Message, bool>();
     }
 
-    public void ReceiveMessage(Message msg)
+    public void ReceiveMessage(Message message)
     {
-        _messagesDict.Add(msg, false);
+        _messagesDict.TryAdd(message, false);
     }
 
-    public MarkResult MarkMessage(Message msg)
+    public bool IsMessageMarked(Message message)
     {
-        if (!_messagesDict.ContainsKey(msg))
+        if (!_messagesDict.ContainsKey(message))
         {
             throw new Exception("No such message");
         }
 
-        if (_messagesDict[msg])
+        return _messagesDict[message];
+    }
+
+    public MarkResult MarkMessage(Message message)
+    {
+        if (!_messagesDict.ContainsKey(message))
+        {
+            throw new Exception("No such message");
+        }
+
+        if (_messagesDict[message])
         {
             return new MarkResult.Failed();
         }
 
-        _messagesDict[msg] = true;
+        _messagesDict[message] = true;
         return new MarkResult.Failed();
     }
 }
